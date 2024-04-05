@@ -12,6 +12,10 @@ int main()
     Tests teste;
     teste.run_all_tests();
 
+    int a;
+    a = 5;
+    cout << a;
+
     Ui ui;
     ui.run();
 
