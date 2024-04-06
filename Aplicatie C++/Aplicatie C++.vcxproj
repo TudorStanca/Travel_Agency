@@ -140,6 +140,7 @@
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="Tests.cpp" />
     <ClCompile Include="Ui.cpp" />
+    <ClCompile Include="VectorDinamic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Oferta.h" />
@@ -147,6 +148,7 @@
     <ClInclude Include="Service.h" />
     <ClInclude Include="Tests.h" />
     <ClInclude Include="Ui.h" />
+    <ClInclude Include="VectorDinamic.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

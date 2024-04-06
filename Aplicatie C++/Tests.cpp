@@ -1,5 +1,109 @@
 #include "Tests.h"
 
+void Tests::test_vector_dinamic() {
+	VectorDinamic <int> v1;
+
+	assert(v1.size() == 0);
+	assert(v1.max_size() == 5);
+
+	VectorDinamic <int> v2(1);
+
+	assert(v1.empty() == 1);
+	assert(v2.size() == 0);
+	assert(v2.max_size() == 1);
+
+	v2.push_back(1);
+	assert(v2.size() == 1);
+	assert(v2.max_size() == 1);
+	assert(v2.at(0) == 1);
+	assert(v2.empty() == 0);
+
+	v2[0] = 2;
+
+	assert(v2.size() == 1);
+	assert(v2.max_size() == 1);
+	assert(v2.at(0) == 2);
+
+	v2.push_back(3);
+
+	assert(v2.size() == 2);
+	assert(v2.max_size() == 2);
+	assert(v2.at(1) == 3);
+
+	v2.push_back(4);
+	v2.push_back(5);
+	v2.push_back(6);
+	v2.push_back(7);
+
+	assert(v2.size() == 6);
+	assert(v2.max_size() == 8);
+
+	VectorDinamic <int> v3(v2);
+	assert(v3.size() == 6);
+	assert(v3.max_size() == 8);
+	assert(v3.at(v3.size() - 1) == 7);
+
+	v1 = v2;
+	v1 = v1;
+
+	assert(v1.size() == 6);
+	assert(v1.max_size() == 8);
+	assert(v1.at(v1.size() - 1) == 7);
+
+	v2.erase(0);
+
+	assert(v2.size() == 5);
+	assert(v2.max_size() == 8);
+	assert(v2.at(0) == 3);
+
+	v2.erase(0);
+	v2.erase(0);
+
+	assert(v2.size() == 3);
+	assert(v2.max_size() == 4);
+	assert(v2.at(0) == 5);
+
+	v2.erase(0);
+	v2.erase(0);
+	v2.erase(0);
+
+	assert(v2.size() == 0);
+	assert(v2.max_size() == 1);
+	assert(v2.empty() == 1);
+
+	try {
+		v1.at(100);
+		assert(false);
+	}
+	catch (exception&) {
+		assert(true);
+	}
+
+	try {
+		v1[100];
+		assert(false);
+	}
+	catch (exception&) {
+		assert(true);
+	}
+
+	try {
+		VectorDinamic <int> v(-100);
+		assert(false);
+	}
+	catch (exception&) {
+		assert(true);
+	}
+
+	try {
+		v1.erase(1000);
+		assert(false);
+	}
+	catch (exception&) {
+		assert(true);
+	}
+}
+
 void Tests::test_creeaza_oferta() {
 	Oferta a{ "dsa", "dsadsa", "dsadsadsa", 100 };
 
@@ -271,6 +375,10 @@ void Tests::test_sortare_service() {
 	}
 }
 
+void Tests::test_vector() {
+	test_vector_dinamic();
+}
+
 void Tests::test_domain() {
 	test_creeaza_oferta();
 }
@@ -293,6 +401,7 @@ void Tests::test_service() {
 }
 
 void Tests::run_all_tests() {
+	test_vector();
 	test_domain();
 	test_repository();
 	test_service();

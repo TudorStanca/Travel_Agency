@@ -12,8 +12,8 @@ int main()
     Tests teste;
     teste.run_all_tests();
 
-    Ui ui;
-    ui.run();
+    //Ui ui;
+    //ui.run();
 
     return 0;
 }

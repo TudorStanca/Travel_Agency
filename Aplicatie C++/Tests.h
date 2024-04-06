@@ -1,10 +1,13 @@
 #pragma once
+#include "VectorDinamic.h"
 #include "Oferta.h"
 #include "Repository.h"
 #include "Service.h"
 #include <cassert>
 
 class Tests {
+
+	void test_vector_dinamic();
 
 	void test_creeaza_oferta();
 
@@ -21,6 +24,7 @@ class Tests {
 	void test_filtrare_service();
 	void test_sortare_service();
 
+	void test_vector();
 
 	void test_domain();
 
