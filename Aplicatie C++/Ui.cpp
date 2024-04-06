@@ -28,7 +28,7 @@ void Ui::afisare_oferta(const Oferta& oferta) const {
 	cout << oferta.get_denumire() << " " << oferta.get_destinatie() << " " << oferta.get_tip() << " " << oferta.get_pret() << "\n";
 }
 
-void Ui::afisare_vector_oferte(const vector <Oferta>& v) const {
+void Ui::afisare_vector_oferte(const VectorDinamic <Oferta>& v) const {
 	for (int i = 0; i < v.size(); i++) {
 		cout << i + 1 << " ";
 		afisare_oferta(v.at(i));
@@ -83,7 +83,7 @@ void Ui::cautare_ui() const {
 void Ui::filtrare_ui() const {
 	string destinatie;
 	int pret, varianta;
-	vector <Oferta> v;
+	VectorDinamic <Oferta> v;
 	print_menu_filtrare();
 	cout << "\nInput varianta: ", cin >> varianta;
 	switch (varianta) {
@@ -108,7 +108,7 @@ void Ui::filtrare_ui() const {
 
 void Ui::sortare_ui() const {
 	int varianta, reversed;
-	vector <Oferta> v = service.get_copie_elemente();
+	VectorDinamic <Oferta> v = service.get_copie_elemente();
 	print_menu_sortare();
 	cout << "Input varianta: ", cin >> varianta;
 	cout << "\n1. Crescator\n2. Descrescator\n\nInput varianta: ", cin >> reversed;

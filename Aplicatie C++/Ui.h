@@ -34,7 +34,7 @@ class Ui {
 	/// Afiseaza un vector de oferte pe ecran
 	/// </summary>
 	/// <param name="v"> Vectorul de oferte afisat </param>
-	void afisare_vector_oferte(const vector <Oferta>& v) const;
+	void afisare_vector_oferte(const VectorDinamic <Oferta>& v) const;
 
 	/// <summary>
 	/// Functia de ui pentru adaugare

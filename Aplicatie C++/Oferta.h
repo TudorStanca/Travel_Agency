@@ -15,6 +15,11 @@ class Oferta {
 public:
 
 	/// <summary>
+	/// Default constructor pentru oferta
+	/// </summary>
+	Oferta();
+
+	/// <summary>
 	/// Constructor pentru oferta
 	/// </summary>
 	/// <param name="denumire"> Denumirea ofertei </param>

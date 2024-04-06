@@ -1,6 +1,6 @@
 #include "Service.h"
 
-const vector<Oferta>& Service::get_elemente() const noexcept {
+const VectorDinamic<Oferta>& Service::get_elemente() const {
 	return repository.get_elemente();
 }
 
@@ -11,7 +11,7 @@ const Oferta& Service::get_element_pozitie(const int& pozitie) const {
 	return repository.get_element_pozitie(pozitie);
 }
 
-vector<Oferta> Service::get_copie_elemente() const {
+VectorDinamic<Oferta> Service::get_copie_elemente() const {
 	return repository.get_elemente();
 }
 
@@ -38,19 +38,37 @@ int Service::cauta_oferta_service(const string& denumire) const {
 	return repository.cauta_element(denumire);
 }
 
-vector <Oferta> Service::filtrare_oferte_service(const string& destinatie) const {
-	vector <Oferta> v;
-	copy_if(repository.get_elemente().begin(), repository.get_elemente().end(), back_inserter(v), [destinatie](const Oferta& a) {return a.get_destinatie() == destinatie; });
-	return v;
+VectorDinamic <Oferta> Service::filtrare_oferte_service(const string& destinatie) const {
+	vector <Oferta> v, u;
+	VectorDinamic <Oferta> rezultat;
+	for (const auto& oferta : repository.get_copie_elemente()) {
+		v.push_back(oferta);
+	}
+	copy_if(v.begin(), v.end(), back_inserter(u), [destinatie](const Oferta& a) {return a.get_destinatie() == destinatie; });
+	for (const auto& oferta : u) {
+		rezultat.push_back(oferta);
+	}
+	return rezultat;
 }
 
-vector <Oferta> Service::filtrare_oferte_service(const int& pret) const noexcept {
-	vector <Oferta> v;
-	copy_if(repository.get_elemente().begin(), repository.get_elemente().end(), back_inserter(v), [pret](const Oferta& a) noexcept {return a.get_pret() == pret; });
-	return v;
+VectorDinamic <Oferta> Service::filtrare_oferte_service(const int& pret) const {
+	vector <Oferta> v, u;
+	VectorDinamic <Oferta> rezultat;
+	for (const auto& oferta : repository.get_copie_elemente()) {
+		v.push_back(oferta);
+	}
+	copy_if(v.begin(), v.end(), back_inserter(u), [pret](const Oferta& a) noexcept {return a.get_pret() == pret; });
+	for (const auto& oferta : u) {
+		rezultat.push_back(oferta);
+	}
+	return rezultat;
 }
 
-void Service::sortare_oferte_service(vector <Oferta>& v, const int& varianta, const bool& reversed) const {
+void Service::sortare_oferte_service(VectorDinamic <Oferta>& rezultat, const int& varianta, const bool& reversed) const {
+	vector <Oferta> v;
+	for (const auto& oferta : repository.get_copie_elemente()) {
+		v.push_back(oferta);
+	}
 	switch (varianta) {
 	case 1: // denumire
 		sort(v.begin(), v.end(), [reversed](const Oferta& a, const Oferta& b) {  if (a.get_denumire() <= b.get_denumire()) { return !(reversed); } return reversed; });
@@ -64,5 +82,9 @@ void Service::sortare_oferte_service(vector <Oferta>& v, const int& varianta, co
 	default:
 		throw exception{ "E bai!" };
 		break;
+	}
+	for (const auto& oferta : v) {
+		rezultat.erase(0);
+		rezultat.push_back(oferta);
 	}
 }

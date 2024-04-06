@@ -23,7 +23,7 @@ public:
 	/// Getter pentru vectorul de oferte
 	/// </summary>
 	/// <returns> Vectorul de oferte </returns>
-	const vector <Oferta>& get_elemente() const noexcept;
+	const VectorDinamic <Oferta>& get_elemente() const;
 
 	/// <summary>
 	/// Getter pentru o oferta de pe o pozitie din vector
@@ -36,7 +36,7 @@ public:
 	/// Getter pentro vectorul de elemente
 	/// </summary>
 	/// <returns> O copie a vectorului de elemente </returns>
-	vector <Oferta> get_copie_elemente() const;
+	VectorDinamic <Oferta> get_copie_elemente() const;
 
 	/// <summary>
 	/// Adauga o oferta in repository
@@ -75,14 +75,14 @@ public:
 	/// </summary>
 	/// <param name="destinatie"> Element de filtrare </param>
 	/// <returns> O copie a vectorului initial, filtrat </returns>
-	vector <Oferta> filtrare_oferte_service(const string& destinatie) const;
+	VectorDinamic <Oferta> filtrare_oferte_service(const string& destinatie) const;
 
 	/// <summary>
 	/// Filtreaza vectorul de oferte dupa un pret
 	/// </summary>
 	/// <param name="pret"> Element de filtrare </param>
 	/// <returns> O copie a vectorului initial, filtrat </returns>
-	vector <Oferta> filtrare_oferte_service(const int& pret) const noexcept;
+	VectorDinamic <Oferta> filtrare_oferte_service(const int& pret) const;
 
 	/// <summary>
 	/// Sorteaza vectorul dupa un criteriu (denumire, destinatie, tip + pret) crescator / descrescator
@@ -90,6 +90,6 @@ public:
 	/// <param name="v"> Vectorul care este sortat </param>
 	/// <param name="varianta"> Criteriul de sortare </param>
 	/// <param name="reversed"> Sortare crescatoare / descrescatoare </param>
-	void sortare_oferte_service(vector <Oferta>& v, const int& varianta, const bool& reversed) const;
+	void sortare_oferte_service(VectorDinamic <Oferta>& v, const int& varianta, const bool& reversed) const;
 };
 

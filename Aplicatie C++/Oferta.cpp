@@ -1,10 +1,11 @@
 #include "Oferta.h"
 
+Oferta::Oferta() : pret{ 0 } {}
+
 Oferta::Oferta(const string& denumire, const string& destinatie, const string& tip, const int& pret) :denumire{ denumire }, destinatie{ destinatie }, tip{ tip }, pret{ pret } {}
 
 //Oferta::Oferta(const Oferta& oferta) {
 //	*this = oferta;
-//	cout << "Copie oferta ---------------------------------------------------------------\n";
 //}
 
 const string& Oferta::get_denumire() const noexcept {

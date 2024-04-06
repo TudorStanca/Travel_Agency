@@ -222,7 +222,6 @@ void Tests::test_copie_elemente() {
 	for (int i = 0; i < v.size(); i++) {
 		assert(repository.get_element_pozitie(i) == v.at(i));
 	}
-	assert(v == repository.get_elemente());
 }
 
 void Tests::test_adauga_oferta_service() {

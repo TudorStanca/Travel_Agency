@@ -1,5 +1,6 @@
 #pragma once
 #include "Oferta.h"
+#include "VectorDinamic.h"
 #include <vector>
 #include <algorithm>
 
@@ -7,7 +8,7 @@ using std::vector;
 
 class Repository {
 
-	vector <Oferta> elemente;
+	VectorDinamic <Oferta> elemente;
 
 public:
 
@@ -21,7 +22,7 @@ public:
 	/// Getter pentru vectorul de oferte
 	/// </summary>
 	/// <returns> Vectorul de oferte </returns>
-	const vector <Oferta>& get_elemente() const noexcept;
+	const VectorDinamic <Oferta>& get_elemente() const;
 
 	/// <summary>
 	/// Getter pentru un element de pe o pozitie din vectorul de oferte
@@ -34,7 +35,7 @@ public:
 	/// Getter pentru o copie a vectorului de oferte
 	/// </summary>
 	/// <returns> O copie a vectorului de oferte </returns>
-	vector <Oferta> get_copie_elemente() const;
+	VectorDinamic <Oferta> get_copie_elemente() const;
 
 	/// <summary>
 	/// Adauga o oferta in repository
@@ -46,7 +47,7 @@ public:
 	/// Sterge o ofera din repository de pe o pozitie data
 	/// </summary>
 	/// <param name="pozitie"> Pozitia ofertei care va fi stearsa </param>
-	void sterge_oferta(const int& pozitie) noexcept;
+	void sterge_oferta(const int& pozitie);
 
 	/// <summary>
 	/// Modifica o oferta din repository cu o alta oferta noua
