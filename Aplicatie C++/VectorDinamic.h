@@ -3,8 +3,8 @@
 
 using std::exception;
 
-//template <typename TElement>
-//class IteratorVector;
+template <typename TElement>
+class IteratorVector;
 
 template <typename TElement>
 class VectorDinamic {
@@ -124,39 +124,13 @@ public:
 	/// <exception cref="Pozitia iese din vector"></exception>
 	void erase(const int& pozitie);
 
-	//friend class IteratorVector <TElement>;
+	friend class IteratorVector <TElement>;
 
-	//IteratorVector <TElement> begin();
+	IteratorVector <TElement> begin();
 
-	//IteratorVector <TElement> end();
+	IteratorVector <TElement> end();
 
 };
-
-//template <typename TElement>
-//class IteratorVector {
-//
-//	const VectorDinamic <TElement>& v;
-//	int pozitie = 0;
-//
-//public:
-//
-//	IteratorVector(const VectorDinamic <TElement>& v);
-//	IteratorVector(Const VectorDinamic <TElement>& v, int pozitie);
-//
-//	bool valid();
-//
-//	TElement element();
-//
-//	void next();
-//
-//	TElement operator*();
-//
-//	void operator++();
-//
-//	bool operator==(const IteratorVector& other);
-//
-//	bool operator!=(const IteratorVector& other);
-//};
 
 template<typename TElement>
 void VectorDinamic<TElement>::redimensionare() {
@@ -185,10 +159,13 @@ template<typename TElement>
 VectorDinamic<TElement>::VectorDinamic() : elemente{ new TElement[5] }, capacitate{ 5 }, lungime{ 0 } {}
 
 template<typename TElement>
-VectorDinamic<TElement>::VectorDinamic(const int& capacitate_initiala) : elemente{ new TElement[capacitate_initiala] }, capacitate{ capacitate_initiala }, lungime{ 0 } {
-	if (capacitate <= 0) {
+VectorDinamic<TElement>::VectorDinamic(const int& capacitate_initiala) {
+	if (capacitate_initiala <= 0) {
 		throw std::exception{ "Capacitatea vectorului nu poate sa fie 0!" };
 	}
+	elemente = new TElement[capacitate_initiala];
+	capacitate = capacitate_initiala;
+	lungime = 0;
 }
 
 //destructor
@@ -276,4 +253,126 @@ void VectorDinamic<TElement>::erase(const int& pozitie) {
 	if (lungime <= capacitate / 2 && capacitate != 1) {
 		redimensionare_in_jos();
 	}
+}
+
+template<typename TElement>
+IteratorVector<TElement> VectorDinamic<TElement>::begin() {
+	return IteratorVector<TElement>(*this);
+}
+
+template<typename TElement>
+IteratorVector<TElement> VectorDinamic<TElement>::end() {
+	return IteratorVector<TElement>(*this, lungime);
+}
+
+
+
+template <typename TElement>
+class IteratorVector {
+
+	const VectorDinamic <TElement>& vector;
+	int pozitie;
+
+public:
+
+	/// <summary>
+	/// Constructor pentru iteratorul de pe un vector
+	/// </summary>
+	/// <param name="vector"> Vectorul care se itereaza </param>
+	IteratorVector(const VectorDinamic <TElement>& vector);
+
+	/// <summary>
+	/// Constructor pentru iteratorul de pe un vector
+	/// </summary>
+	/// <param name="vector"> Vectorul care se itereaza </param>
+	/// <param name="pozitie"> Pozitia de pe care se incepe iteratia </param>
+	IteratorVector(const VectorDinamic <TElement>& vector, int pozitie);
+
+	/// <summary>
+	/// Valideaza un iterator
+	/// </summary>
+	/// <returns> true daca e valid, false altfel </returns>
+	bool valid() const;
+
+	/// <summary>
+	/// Getter pentru elementul iterat
+	/// </summary>
+	/// <returns> Elementul in cauza </returns>
+	const TElement& element() const;
+
+	/// <summary>
+	/// Merge pe pozitia urmatoare
+	/// </summary>
+	void next();
+
+	/// <summary>
+	/// Versiunea de C++ la element()
+	/// </summary>
+	/// <returns> Elementul pe care se afla </returns>
+	const TElement& operator*() const;
+
+	/// <summary>
+	/// Versiunea C++ la next()
+	/// </summary>
+	void operator++();
+
+	/// <summary>
+	/// Verifica daca doi iteratori sunt egali
+	/// </summary>
+	/// <param name="other"> Al doilea iterator </param>
+	/// <returns> true daca e adevarat, false altfel </returns>
+	bool operator==(const IteratorVector& other) const;
+
+	/// <summary>
+	/// Verifica daca doi iteratori sunt diferiti
+	/// </summary>
+	/// <param name="other"> Al doilea iterator </param>
+	/// <returns> true daca e adevarat, false altfel </returns>
+	bool operator!=(const IteratorVector& other) const;
+};
+
+template<typename TElement>
+IteratorVector<TElement>::IteratorVector(const VectorDinamic<TElement>& vector) : vector{ vector }, pozitie{ 0 } {}
+
+template<typename TElement>
+IteratorVector<TElement>::IteratorVector(const VectorDinamic<TElement>& vector, int pozitie) : vector{ vector }, pozitie{ pozitie } {}
+
+template<typename TElement>
+bool IteratorVector<TElement>::valid() const {
+	if (pozitie >= vector.size()) {
+		return false;
+	}
+	return true;
+}
+
+template<typename TElement>
+const TElement& IteratorVector<TElement>::element() const {
+	return vector.at(pozitie);
+}
+
+template<typename TElement>
+void IteratorVector<TElement>::next() {
+	if (valid() == true) {
+		pozitie++;
+	}
+}
+
+template<typename TElement>
+const TElement& IteratorVector<TElement>::operator*() const {
+	return element();
+}
+
+template<typename TElement>
+void IteratorVector<TElement>::operator++() {
+	next();
+}
+
+template<typename TElement>
+bool IteratorVector<TElement>::operator==(const IteratorVector& other) const {
+	return pozitie == other.pozitie;
+}
+
+template<typename TElement>
+bool IteratorVector<TElement>::operator!=(const IteratorVector& other) const {
+	return !(*this == other);
 }

@@ -104,6 +104,25 @@ void Tests::test_vector_dinamic() {
 	}
 }
 
+void Tests::test_iterator_vector() {
+	VectorDinamic <int> v;
+	const int a[]{ 1, 2, 3, 4, 5 };
+	for (const auto& el : v) {
+		cout << el;
+		assert(false);
+	}
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(3);
+	v.push_back(4);
+	v.push_back(5);
+	int i = 0;
+	for (const auto& el : v) {
+		assert(el == a[i]);
+		i++;
+	}
+}
+
 void Tests::test_creeaza_oferta() {
 	Oferta a{ "dsa", "dsadsa", "dsadsadsa", 100 };
 
@@ -377,6 +396,7 @@ void Tests::test_sortare_service() {
 
 void Tests::test_vector() {
 	test_vector_dinamic();
+	test_iterator_vector();
 }
 
 void Tests::test_domain() {

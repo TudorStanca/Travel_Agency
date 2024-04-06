@@ -4,10 +4,12 @@
 #include "Repository.h"
 #include "Service.h"
 #include <cassert>
+#include <iostream>
 
 class Tests {
 
 	void test_vector_dinamic();
+	void test_iterator_vector();
 
 	void test_creeaza_oferta();
 
