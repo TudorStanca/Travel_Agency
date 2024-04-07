@@ -1,8 +1,32 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "Oferta.h"
 
-Oferta::Oferta() : pret{ 0 } {}
+//Oferta::Oferta() : pret{ 0 } {}
 
-Oferta::Oferta(const string& denumire, const string& destinatie, const string& tip, const int& pret) :denumire{ denumire }, destinatie{ destinatie }, tip{ tip }, pret{ pret } {}
+void Oferta::validator() const {
+	char errors[200]{""};
+
+	if (denumire.size() < 3) {
+		strcat(errors, "\nDenumirea trebuie sa aibe macar 3 caractere");
+	}
+	if (destinatie.size() < 1) {
+		strcat(errors, "\nDestinatia nu trebuie sa fie vida");
+	}
+	if (tip.size() < 1) {
+		strcat(errors, "\nTipul nu trebuie sa fie vid");
+	}
+	if (pret < 0) {
+		strcat(errors, "\nPretul nu trebuie sa fie negativ");
+	}
+
+	if (strlen(errors) > 0) {
+		throw exception{ errors };
+	}
+}
+
+Oferta::Oferta(const string& denumire, const string& destinatie, const string& tip, const int& pret) :denumire{ denumire }, destinatie{ destinatie }, tip{ tip }, pret{ pret } {
+	validator();
+}
 
 //Oferta::Oferta(const Oferta& oferta) {
 //	*this = oferta;
@@ -26,20 +50,29 @@ const int& Oferta::get_pret() const noexcept {
 
 void Oferta::set_denumire(const string& new_denumire) {
 	denumire = new_denumire;
+	validator();
 }
 
 void Oferta::set_destinatie(const string& new_destinatie) {
 	destinatie = new_destinatie;
+	validator();
 }
 
 void Oferta::set_tip(const string& new_tip) {
 	tip = new_tip;
+	validator();
 }
 
-void Oferta::set_pret(const int& new_pret) noexcept {
+void Oferta::set_pret(const int& new_pret) {
 	pret = new_pret;
+	validator();
 }
 
 bool Oferta::operator==(const Oferta& other) const noexcept {
 	return denumire == other.get_denumire() && destinatie == other.get_destinatie() && tip == other.get_tip() && pret == other.get_pret();
+}
+
+ostream& operator<<(ostream& out, const Oferta& oferta){
+	out << oferta.denumire << " " << oferta.destinatie << " " << oferta.tip << " " << oferta.pret;
+	return out;
 }

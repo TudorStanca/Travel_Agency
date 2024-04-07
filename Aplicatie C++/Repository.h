@@ -22,7 +22,7 @@ public:
 	/// Getter pentru vectorul de oferte
 	/// </summary>
 	/// <returns> Vectorul de oferte </returns>
-	const VectorDinamic <Oferta>& get_elemente() const;
+	const VectorDinamic <Oferta>& get_elemente() const noexcept;
 
 	/// <summary>
 	/// Getter pentru un element de pe o pozitie din vectorul de oferte
@@ -35,7 +35,7 @@ public:
 	/// Getter pentru o copie a vectorului de oferte
 	/// </summary>
 	/// <returns> O copie a vectorului de oferte </returns>
-	VectorDinamic <Oferta> get_copie_elemente() const;
+	VectorDinamic <Oferta> get_copie_elemente() const noexcept;
 
 	/// <summary>
 	/// Adauga o oferta in repository
@@ -61,5 +61,5 @@ public:
 	/// </summary>
 	/// <param name="denumire_cautare"> Denumirea dupa care se face cautarea </param>
 	/// <returns> Pozitia ofertei sau -1 daca nu exista </returns>
-	int cauta_element(const string& denumire_cautare) const;
+	int cauta_element(const string& denumire_cautare) const noexcept;
 };

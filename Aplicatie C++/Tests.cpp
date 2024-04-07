@@ -108,8 +108,7 @@ void Tests::test_iterator_vector() {
 	VectorDinamic <int> v;
 	const int a[]{ 1, 2, 3, 4, 5 };
 	for (const auto& el : v) {
-		cout << el;
-		assert(false);
+		assert(el == 1);
 	}
 	v.push_back(1);
 	v.push_back(2);

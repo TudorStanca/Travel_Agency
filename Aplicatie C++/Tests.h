@@ -4,7 +4,6 @@
 #include "Repository.h"
 #include "Service.h"
 #include <cassert>
-#include <iostream>
 
 class Tests {
 

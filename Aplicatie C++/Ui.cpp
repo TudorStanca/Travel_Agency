@@ -1,6 +1,6 @@
 #include "Ui.h"
 
-void Ui::print_menu() const {
+void Ui::print_menu() const{
 	cout << "\n1. Adaugare oferta\n";
 	cout << "2. Stergere oferta\n";
 	cout << "3. Modificare oferta\n";
@@ -13,25 +13,21 @@ void Ui::print_menu() const {
 	cout << "\nInput comanda: ";
 }
 
-void Ui::print_menu_filtrare() const {
+void Ui::print_menu_filtrare() const{
 	cout << "\n1. Filtrare dupa destinatie\n";
 	cout << "2. Filtrare dupa pret\n";
 }
 
-void Ui::print_menu_sortare() const {
+void Ui::print_menu_sortare() const{
 	cout << "\n1. Sortare dupa denumire\n";
 	cout << "2. Sortare dupa destinatie\n";
 	cout << "3. Sortare dupa tip + pret\n";
 }
 
-void Ui::afisare_oferta(const Oferta& oferta) const {
-	cout << oferta.get_denumire() << " " << oferta.get_destinatie() << " " << oferta.get_tip() << " " << oferta.get_pret() << "\n";
-}
-
 void Ui::afisare_vector_oferte(const VectorDinamic <Oferta>& v) const {
 	for (int i = 0; i < v.size(); i++) {
 		cout << i + 1 << " ";
-		afisare_oferta(v.at(i));
+		cout << v.at(i) << "\n";
 	}
 	cout << "\n";
 }
@@ -49,7 +45,11 @@ void Ui::adaugare_ui() {
 
 void Ui::stergere_ui() {
 	int pozitie;
-	afisare_ui();
+	if (service.get_elemente().size() == 0) {
+		cout << "\nLista de oferte este goala\n";
+		return;
+	}
+	afisare_vector_oferte(service.get_elemente());
 	cout << "\nInput numarul ofertei care va fi stearsa: ", cin >> pozitie;
 	service.sterge_oferta_service(pozitie - 1);
 }
@@ -57,7 +57,11 @@ void Ui::stergere_ui() {
 void Ui::modificare_ui() {
 	string denumire, destinatie, tip;
 	int pret, pozitie;
-	afisare_ui();
+	if (service.get_elemente().size() == 0) {
+		cout << "\nLista de oferte este goala\n";
+		return;
+	}
+	afisare_vector_oferte(service.get_elemente());
 	cout << "\nInput numarul ofertei care va fi modificata: ", cin >> pozitie;
 	cout << "\nInput noua denumire: ", cin >> denumire;
 	cout << "\nInput noua destinatie: ", cin >> destinatie;
@@ -76,7 +80,7 @@ void Ui::cautare_ui() const {
 	}
 	else {
 		cout << "\nOferta cautata\n";
-		afisare_oferta(service.get_element_pozitie(pozitie));
+		cout << service.get_element_pozitie(pozitie);
 	}
 }
 
@@ -84,6 +88,10 @@ void Ui::filtrare_ui() const {
 	string destinatie;
 	int pret, varianta;
 	VectorDinamic <Oferta> v;
+	if (service.get_elemente().size() == 0) {
+		cout << "\nLista de oferte este goala\n";
+		return;
+	}
 	print_menu_filtrare();
 	cout << "\nInput varianta: ", cin >> varianta;
 	switch (varianta) {
@@ -96,7 +104,7 @@ void Ui::filtrare_ui() const {
 		v = service.filtrare_oferte_service(pret);
 		break;
 	default:
-		throw exception{ "E bai!" };
+		throw exception{ "Nu exista optiunea introdusa" };
 		break;
 	}
 	if (v.empty() == 1) {
@@ -109,6 +117,10 @@ void Ui::filtrare_ui() const {
 void Ui::sortare_ui() const {
 	int varianta, reversed;
 	VectorDinamic <Oferta> v = service.get_copie_elemente();
+	if (service.get_elemente().size() == 0) {
+		cout << "\nLista de oferte este goala\n";
+		return;
+	}
 	print_menu_sortare();
 	cout << "Input varianta: ", cin >> varianta;
 	cout << "\n1. Crescator\n2. Descrescator\n\nInput varianta: ", cin >> reversed;
@@ -120,7 +132,7 @@ void Ui::sortare_ui() const {
 		service.sortare_oferte_service(v, varianta, 1);
 		break;
 	default:
-		throw exception{ "E bai!" };
+		throw exception{ "Nu exista optiunea introdusa" };
 		break;
 	}
 	afisare_vector_oferte(v);

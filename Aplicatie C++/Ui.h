@@ -1,7 +1,8 @@
 #pragma once
 #include "Service.h"
-#include "iostream"
+#include <sstream>
 
+using std::stringstream;
 using std::cin;
 using std::cout;
 
@@ -23,12 +24,6 @@ class Ui {
 	/// Afiseaza meniul sortarii
 	/// </summary>
 	void print_menu_sortare() const;
-
-	/// <summary>
-	/// Afiseaza o oferta pe ecran
-	/// </summary>
-	/// <param name="oferta"> Oferta care este afisata </param>
-	void afisare_oferta(const Oferta& oferta) const;
 
 	/// <summary>
 	/// Afiseaza un vector de oferte pe ecran
@@ -92,4 +87,3 @@ public:
 
 
 };
-

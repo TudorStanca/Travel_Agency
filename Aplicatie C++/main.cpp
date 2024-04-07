@@ -1,9 +1,7 @@
 #include "Tests.h"
 #include "Ui.h"
+#include "Oferta.h"
 
-// de facut validari in service
-// de facut functie de cautare generica cu template in repository
-// verificare unicitate a denumirei
 // validare date de intrare (sa nu crape aplicatia)
 // de facut ui-ul sa arate mai frumos
 

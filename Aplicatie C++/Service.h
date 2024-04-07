@@ -1,9 +1,7 @@
 #pragma once
 #include "Repository.h"
-#include <exception>
 #include <iterator>
 
-using std::exception;
 using std::copy_if;
 using std::back_inserter;
 
@@ -23,7 +21,7 @@ public:
 	/// Getter pentru vectorul de oferte
 	/// </summary>
 	/// <returns> Vectorul de oferte </returns>
-	const VectorDinamic <Oferta>& get_elemente() const;
+	const VectorDinamic <Oferta>& get_elemente() const noexcept;
 
 	/// <summary>
 	/// Getter pentru o oferta de pe o pozitie din vector
@@ -36,7 +34,7 @@ public:
 	/// Getter pentro vectorul de elemente
 	/// </summary>
 	/// <returns> O copie a vectorului de elemente </returns>
-	VectorDinamic <Oferta> get_copie_elemente() const;
+	VectorDinamic <Oferta> get_copie_elemente() const noexcept;
 
 	/// <summary>
 	/// Adauga o oferta in repository
@@ -68,7 +66,7 @@ public:
 	/// </summary>
 	/// <param name="denumire"> Denumirea dupa care se face cautarea </param>
 	/// <returns> Pozitia elementului gasit sau -1 altfel </returns>
-	int cauta_oferta_service(const string& denumire) const;
+	int cauta_oferta_service(const string& denumire) const noexcept;
 
 	/// <summary>
 	/// Filtreaza vectorul de oferte dupa o destinatie

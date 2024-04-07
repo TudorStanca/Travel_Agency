@@ -130,6 +130,8 @@ public:
 
 	IteratorVector <TElement> end();
 
+	//friend ostream& operator<<(ostream& out, const VectorDinamic<TElement>& vector);
+	
 };
 
 template<typename TElement>
@@ -265,6 +267,13 @@ IteratorVector<TElement> VectorDinamic<TElement>::end() {
 	return IteratorVector<TElement>(*this, lungime);
 }
 
+//template<typename TElement>
+//ostream& operator<<(ostream& out, const VectorDinamic<TElement>& vector) {
+//	for (const auto& el : vector) {
+//		out << el << "\n";
+//	}
+//	return out;
+//}
 
 
 template <typename TElement>

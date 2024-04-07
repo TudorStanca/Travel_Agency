@@ -1,9 +1,12 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <cstring>
+#include <exception>
 
-using std::cout;
+using std::exception;
 using std::string;
+using std::ostream;
 
 class Oferta {
 
@@ -12,12 +15,14 @@ class Oferta {
 	string tip;
 	int pret;
 
+	void validator() const ;
+
 public:
 
 	/// <summary>
 	/// Default constructor pentru oferta
 	/// </summary>
-	Oferta();
+	Oferta() = default;
 
 	/// <summary>
 	/// Constructor pentru oferta
@@ -75,7 +80,7 @@ public:
 	/// Setter pentru pret
 	/// </summary>
 	/// <param name="new_pret"> Noul pret </param>
-	void set_pret(const int& new_pret) noexcept;
+	void set_pret(const int& new_pret);
 
 	/// <summary>
 	/// Definirea operatiei == intre doua oferte ( egalitate intre fiecare atribut )
@@ -83,5 +88,7 @@ public:
 	/// <param name="other"> Elementul cu care este comparat </param>
 	/// <returns> 1 - egalitate, 0 altfel </returns>
 	bool operator==(const Oferta& other) const noexcept;
+
+	friend ostream& operator<<(ostream& out, const Oferta& oferta);
 };
 
