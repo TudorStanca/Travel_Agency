@@ -1,25 +1,25 @@
 #include "Service.h"
 
-const VectorDinamic<Oferta>& Service::get_elemente() const noexcept {
+const vector<Oferta>& Service::get_elemente() const noexcept {
 	return repository.get_elemente();
 }
 
 const Oferta& Service::get_element_pozitie(const int& pozitie) const {
 	if (pozitie < 0 || pozitie >= repository.get_elemente().size()) {
-		throw exception{ "Pozitia nu este valida!" };
+		throw PozitieInvalida{};
 	}
 	return repository.get_element_pozitie(pozitie);
 }
 
-VectorDinamic<Oferta> Service::get_copie_elemente() const noexcept {
+vector<Oferta> Service::get_copie_elemente() const noexcept {
 	return repository.get_elemente();
 }
 
 void Service::adauga_oferta_service(const string& denumire, const string& destinatie, const string& tip, const int& pret) {
 	Oferta oferta{ denumire, destinatie, tip, pret };
-	for (int i = 0; i < repository.get_elemente().size(); i++) {
-		if (oferta == repository.get_element_pozitie(i)) {
-			throw exception{ "Nu se pot adauga 2 oferte identice" };
+	for (const auto& element : repository.get_elemente()) {
+		if (oferta == element) {
+			throw OfertaIdentica{};
 		}
 	}
 	repository.adauga_oferta(Oferta{ denumire, destinatie, tip, pret });
@@ -27,14 +27,14 @@ void Service::adauga_oferta_service(const string& denumire, const string& destin
 
 void Service::sterge_oferta_service(const int& pozitie) {
 	if (pozitie < 0 || pozitie >= repository.get_elemente().size()) {
-		throw exception{ "Pozitia nu este valida!" };
+		throw PozitieInvalida{};
 	}
 	repository.sterge_oferta(pozitie);
 }
 
 void Service::modifica_oferta_service(const string& denumire, const string& destinatie, const string& tip, const int& pret, const int& pozitie) {
 	if (pozitie < 0 || pozitie >= repository.get_elemente().size()) {
-		throw exception{ "Pozitia nu este valida!" };
+		throw PozitieInvalida{};
 	}
 	Oferta oferta_noua{ denumire, destinatie, tip, pret };
 	repository.modifica_oferta(oferta_noua, pozitie);
@@ -44,37 +44,19 @@ int Service::cauta_oferta_service(const string& denumire) const noexcept {
 	return repository.cauta_element(denumire);
 }
 
-VectorDinamic <Oferta> Service::filtrare_oferte_service(const string& destinatie) const {
-	vector <Oferta> v, u;
-	VectorDinamic <Oferta> rezultat;
-	for (const auto& oferta : repository.get_copie_elemente()) {
-		v.push_back(oferta);
-	}
-	copy_if(v.begin(), v.end(), back_inserter(u), [destinatie](const Oferta& a) {return a.get_destinatie() == destinatie; });
-	for (const auto& oferta : u) {
-		rezultat.push_back(oferta);
-	}
-	return rezultat;
-}
-
-VectorDinamic <Oferta> Service::filtrare_oferte_service(const int& pret) const {
-	vector <Oferta> v, u;
-	VectorDinamic <Oferta> rezultat;
-	for (const auto& oferta : repository.get_copie_elemente()) {
-		v.push_back(oferta);
-	}
-	copy_if(v.begin(), v.end(), back_inserter(u), [pret](const Oferta& a) noexcept {return a.get_pret() == pret; });
-	for (const auto& oferta : u) {
-		rezultat.push_back(oferta);
-	}
-	return rezultat;
-}
-
-void Service::sortare_oferte_service(VectorDinamic <Oferta>& rezultat, const int& varianta, const bool& reversed) const {
+vector <Oferta> Service::filtrare_oferte_service(const string& destinatie) const {
 	vector <Oferta> v;
-	for (const auto& oferta : repository.get_copie_elemente()) {
-		v.push_back(oferta);
-	}
+	copy_if(repository.get_elemente().begin(), repository.get_elemente().end(), back_inserter(v), [destinatie](const Oferta& a) {return a.get_destinatie() == destinatie; });
+	return v;
+}
+
+vector <Oferta> Service::filtrare_oferte_service(const int& pret) const noexcept {
+	vector <Oferta> v;
+	copy_if(repository.get_elemente().begin(), repository.get_elemente().end(), back_inserter(v), [pret](const Oferta& a) noexcept {return a.get_pret() == pret; });
+	return v;
+}
+
+void Service::sortare_oferte_service(vector <Oferta>& v, const int& varianta, const bool& reversed) const {
 	switch (varianta) {
 	case 1: // denumire
 		sort(v.begin(), v.end(), [reversed](const Oferta& a, const Oferta& b) {  if (a.get_denumire() <= b.get_denumire()) { return !(reversed); } return reversed; });
@@ -86,11 +68,34 @@ void Service::sortare_oferte_service(VectorDinamic <Oferta>& rezultat, const int
 		sort(v.begin(), v.end(), [reversed](const Oferta& a, const Oferta& b) {  if (a.get_tip() < b.get_tip()) { return !(reversed); } else if (a.get_tip() == b.get_tip()) { if (a.get_pret() <= b.get_pret()) { return !(reversed); } } return reversed; });
 		break;
 	default:
-		throw exception{ "Nu exista optiunea introdusa!" };
+		throw OptiuneSort{};
 		break;
 	}
-	for (const auto& oferta : v) {
-		rezultat.erase(0);
-		rezultat.push_back(oferta);
+}
+
+const vector<Oferta>& Service::get_cos_service() const {
+	return cos.get_cos();
+}
+
+void Service::goleste_cos_service() {
+	cos.goleste_cos();
+}
+
+void Service::adaugare_oferta_in_cos_service(const string& denumire) {
+	const auto& pozitie_oferta = repository.cauta_element(denumire);
+	if (pozitie_oferta == -1) {
+		throw OfertaNuExista{};
 	}
+	cos.adauga_in_cos(repository.get_element_pozitie(pozitie_oferta));
+}
+
+int Service::generare_oferte_cos_service(const int& nr_oferte) {
+	if (repository.get_elemente().empty() == 1) {
+		throw RepositoryGol{};
+	}
+	return cos.genereaza_cos(repository.get_elemente(), nr_oferte);
+}
+
+void Service::export_to_csv_service(const string& filename) {
+	cos.export_to_csv(filename);
 }

@@ -3,11 +3,11 @@
 void Ui::print_menu() const {
 	cout << "\n1. Adaugare oferta\n";
 	cout << "2. Stergere oferta\n";
-	cout << "3. Modificare oferta\n";
-	cout << "4. Cauta oferta dupa denumire\n";
-	cout << "5. Filtrare oferte turistice\n";
-	cout << "6. Sortare oferte turistice\n";
-	cout << "8. Adaugare oferte demo\n";
+	cout << "3. Modificare oferta				a. Afisare cos\n";
+	cout << "4. Cauta oferta dupa denumire			b. Goleste cos\n";
+	cout << "5. Filtrare oferte turistice			c. Adauga oferta in cos\n";
+	cout << "6. Sortare oferte turistice			d. Genereaza oferte in cos\n";
+	cout << "8. Adaugare oferte demo				e. Export cos\n";
 	cout << "9. Afisare lista oferte\n";
 	cout << "0. Exit\n";
 	cout << "\nInput comanda: ";
@@ -24,7 +24,8 @@ void Ui::print_menu_sortare() const {
 	cout << "3. Sortare dupa tip + pret\n";
 }
 
-void Ui::afisare_vector_oferte(const VectorDinamic <Oferta>& v) const {
+// am nevoie de pozitia elementului sa o afisez, nu merge aritmetica de pointeri
+void Ui::afisare_vector_oferte(const vector <Oferta>& v) const {
 	for (int i = 0; i < v.size(); i++) {
 		cout << i + 1 << " ";
 		cout << v.at(i) << "\n";
@@ -87,7 +88,7 @@ void Ui::cautare_ui() const {
 void Ui::filtrare_ui() const {
 	string destinatie;
 	int pret, varianta;
-	VectorDinamic <Oferta> v;
+	vector <Oferta> v;
 	if (service.get_elemente().size() == 0) {
 		cout << "\nLista de oferte este goala\n";
 		return;
@@ -104,7 +105,7 @@ void Ui::filtrare_ui() const {
 		v = service.filtrare_oferte_service(pret);
 		break;
 	default:
-		throw exception{ "Nu exista optiunea introdusa" };
+		throw NuExistaOptiune{};
 		break;
 	}
 	if (v.empty() == 1) {
@@ -116,7 +117,7 @@ void Ui::filtrare_ui() const {
 
 void Ui::sortare_ui() const {
 	int varianta, reversed;
-	VectorDinamic <Oferta> v = service.get_copie_elemente();
+	vector <Oferta> v = service.get_copie_elemente();
 	if (service.get_elemente().size() == 0) {
 		cout << "\nLista de oferte este goala\n";
 		return;
@@ -132,7 +133,7 @@ void Ui::sortare_ui() const {
 		service.sortare_oferte_service(v, varianta, 1);
 		break;
 	default:
-		throw exception{ "Nu exista optiunea introdusa" };
+		throw NuExistaOptiune{};
 		break;
 	}
 	afisare_vector_oferte(v);
@@ -159,40 +160,104 @@ void Ui::afisare_ui() const {
 	afisare_vector_oferte(service.get_elemente());
 }
 
+void Ui::afisare_cos_ui() const {
+	if (service.get_cos_service().empty() == 1) {
+		cout << "\nCosul este gol!\n";
+		cout << "\nNumar oferte in cos: " << service.get_cos_service().size() << "\n";
+		return;
+	}
+	cout << "\nCosul contine urmatoarele oferte: \n";
+	for (const auto& oferta : service.get_cos_service()) {
+		cout << oferta << "\n";
+	}
+	cout << "\n";
+	cout << "\nNumar oferte in cos: " << service.get_cos_service().size() << "\n";
+}
+
+void Ui::goleste_cos_ui() {
+	if (service.get_cos_service().empty() == 1) {
+		cout << "\nCosul este deja gol!\n";
+	}
+	else {
+		service.goleste_cos_service();
+		cout << "\nCosul a fost golit!\n";
+	}
+	cout << "\nNumar oferte in cos: " << service.get_cos_service().size() << "\n";
+}
+
+void Ui::adauga_oferta_cos_ui() {
+	string denumire;
+	cout << "\nInput denumirea ofertei care va fi adaugat in cos: ", cin >> denumire;
+	service.adaugare_oferta_in_cos_service(denumire);
+	cout << "\nOferta a fost adaugata in cos\n";
+	cout << "\nNumar oferte in cos: " << service.get_cos_service().size() << "\n";
+}
+
+void Ui::genereaza_oferte_cos_ui() {
+	int numar_de_oferte;
+	cout << "\nInput nr. de oferte: ", cin >> numar_de_oferte;
+	const int oferte_generate = service.generare_oferte_cos_service(numar_de_oferte);
+	printf("\nS-au generat %d oferte din cele %d dorite de utilizator\n", oferte_generate, numar_de_oferte);
+	cout << "\nNumar oferte in cos: " << service.get_cos_service().size() << "\n";
+}
+
+void Ui::export_oferte_ui() {
+	string filename;
+	cout << "\nInput nume fisier: ", cin >> filename;
+	service.export_to_csv_service(filename);
+	cout << "\nCosul a fost exportat cu succes\n";
+	cout << "\nNumar oferte in cos: " << service.get_cos_service().size() << "\n";
+}
+
 void Ui::run() {
 	bool rulare = true, oferte_demo_adaugate = false;
-	int comanda;
+	char comanda;
 	while (rulare) {
 		try {
 			print_menu();
 			cin >> comanda;
 			switch (comanda) {
-			case 1:
+			case '1':
 				adaugare_ui();
 				break;
-			case 2:
+			case '2':
 				stergere_ui();
 				break;
-			case 3:
+			case '3':
 				modificare_ui();
 				break;
-			case 4:
+			case '4':
 				cautare_ui();
 				break;
-			case 5:
+			case '5':
 				filtrare_ui();
 				break;
-			case 6:
+			case '6':
 				sortare_ui();
 				break;
-			case 8:
+			case '8':
 				adaugare_oferte_demo_ui(oferte_demo_adaugate);
 				oferte_demo_adaugate = true;
 				break;
-			case 9:
+			case '9':
 				afisare_ui();
 				break;
-			case 0:
+			case 'a':
+				afisare_cos_ui();
+				break;
+			case 'b':
+				goleste_cos_ui();
+				break;
+			case 'c':
+				adauga_oferta_cos_ui();
+				break;
+			case 'd':
+				genereaza_oferte_cos_ui();
+				break;
+			case 'e':
+				export_oferte_ui();
+				break;
+			case '0':
 				rulare = false;
 				break;
 			default:
@@ -200,7 +265,7 @@ void Ui::run() {
 				break;
 			}
 		}
-		catch (const exception& ex) {
+		catch (const MyException& ex) {
 			cout << ex.what() << "\n";
 		}
 	}

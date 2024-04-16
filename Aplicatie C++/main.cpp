@@ -4,16 +4,25 @@
 
 #include "Tests.h"
 #include "Ui.h"
-#include "Oferta.h"
 
-int main()
-{
+// de facut cu find_if
+// de modificat ofertele din cos daca sunt sterse/modificate in repo
+// de adaugat specificatii noi
+// de facut meniul mai frumos
+
+void run_program() {
+
     Tests teste;
     teste.run_all_tests();
 
-    Ui ui;
-    ui.run();
+    //Ui ui;
+    //ui.run();
 
+}
+
+int main()
+{
+    run_program();
     _CrtDumpMemoryLeaks();
 
     return 0;

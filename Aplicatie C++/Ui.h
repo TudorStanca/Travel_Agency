@@ -29,7 +29,7 @@ class Ui {
 	/// Afiseaza un vector de oferte pe ecran
 	/// </summary>
 	/// <param name="v"> Vectorul de oferte afisat </param>
-	void afisare_vector_oferte(const VectorDinamic <Oferta>& v) const;
+	void afisare_vector_oferte(const vector <Oferta>& v) const;
 
 	/// <summary>
 	/// Functia de ui pentru adaugare
@@ -71,6 +71,16 @@ class Ui {
 	/// Afisarea repository-ului in consola
 	/// </summary>
 	void afisare_ui() const;
+
+	void afisare_cos_ui() const;
+
+	void goleste_cos_ui();
+
+	void adauga_oferta_cos_ui();
+
+	void genereaza_oferte_cos_ui();
+
+	void export_oferte_ui();
 
 public:
 

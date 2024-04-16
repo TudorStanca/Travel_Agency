@@ -4,23 +4,23 @@
 //Oferta::Oferta() : pret{ 0 } {}
 
 void Oferta::validator() const {
-	char errors[200]{ "" };
+	string errors="";
 
 	if (denumire.size() < 3) {
-		strcat(errors, "\nDenumirea trebuie sa aibe macar 3 caractere");
+		errors += "\nDenumirea trebuie sa aibe macar 3 caractere";
 	}
 	if (destinatie.size() < 1) {
-		strcat(errors, "\nDestinatia nu trebuie sa fie vida");
+		errors += "\nDestinatia nu trebuie sa fie vida";
 	}
 	if (tip.size() < 1) {
-		strcat(errors, "\nTipul nu trebuie sa fie vid");
+		errors += "\nTipul nu trebuie sa fie vid";
 	}
 	if (pret < 0) {
-		strcat(errors, "\nPretul nu trebuie sa fie negativ");
+		errors += "\nPretul nu trebuie sa fie negativ";
 	}
 
-	if (strlen(errors) > 0) {
-		throw exception{ errors };
+	if (errors.size() > 0) {
+		throw ValidateException{errors};
 	}
 }
 

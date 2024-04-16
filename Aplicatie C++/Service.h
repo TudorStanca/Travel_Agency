@@ -1,5 +1,6 @@
 #pragma once
 #include "Repository.h"
+#include "Cos.h"
 #include <iterator>
 
 using std::copy_if;
@@ -8,6 +9,7 @@ using std::back_inserter;
 class Service {
 
 	Repository repository;
+	Cos cos;
 
 public:
 
@@ -21,7 +23,7 @@ public:
 	/// Getter pentru vectorul de oferte
 	/// </summary>
 	/// <returns> Vectorul de oferte </returns>
-	const VectorDinamic <Oferta>& get_elemente() const noexcept;
+	const vector <Oferta>& get_elemente() const noexcept;
 
 	/// <summary>
 	/// Getter pentru o oferta de pe o pozitie din vector
@@ -34,7 +36,7 @@ public:
 	/// Getter pentro vectorul de elemente
 	/// </summary>
 	/// <returns> O copie a vectorului de elemente </returns>
-	VectorDinamic <Oferta> get_copie_elemente() const noexcept;
+	vector <Oferta> get_copie_elemente() const noexcept;
 
 	/// <summary>
 	/// Adauga o oferta in repository
@@ -73,14 +75,14 @@ public:
 	/// </summary>
 	/// <param name="destinatie"> Element de filtrare </param>
 	/// <returns> O copie a vectorului initial, filtrat </returns>
-	VectorDinamic <Oferta> filtrare_oferte_service(const string& destinatie) const;
+	vector <Oferta> filtrare_oferte_service(const string& destinatie) const;
 
 	/// <summary>
 	/// Filtreaza vectorul de oferte dupa un pret
 	/// </summary>
 	/// <param name="pret"> Element de filtrare </param>
 	/// <returns> O copie a vectorului initial, filtrat </returns>
-	VectorDinamic <Oferta> filtrare_oferte_service(const int& pret) const;
+	vector <Oferta> filtrare_oferte_service(const int& pret) const noexcept;
 
 	/// <summary>
 	/// Sorteaza vectorul dupa un criteriu (denumire, destinatie, tip + pret) crescator / descrescator
@@ -88,6 +90,16 @@ public:
 	/// <param name="v"> Vectorul care este sortat </param>
 	/// <param name="varianta"> Criteriul de sortare </param>
 	/// <param name="reversed"> Sortare crescatoare / descrescatoare </param>
-	void sortare_oferte_service(VectorDinamic <Oferta>& v, const int& varianta, const bool& reversed) const;
+	void sortare_oferte_service(vector <Oferta>& v, const int& varianta, const bool& reversed) const;
+
+	const vector <Oferta>& get_cos_service() const;
+
+	void goleste_cos_service();
+
+	void adaugare_oferta_in_cos_service(const string& denumire);
+
+	int generare_oferte_cos_service(const int& nr_oferte);
+
+	void export_to_csv_service(const string& filename);
 };
 

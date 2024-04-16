@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cstring>
 #include <exception>
+#include "MyException.h"
 
 using std::exception;
 using std::string;

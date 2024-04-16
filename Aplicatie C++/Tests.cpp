@@ -146,7 +146,7 @@ void Tests::test_creeaza_oferta() {
 		Oferta b{ "ds", "", "", -100 };
 		assert(false);
 	}
-	catch (exception&) {
+	catch (MyException&) {
 		assert(true);
 	}
 }
@@ -233,6 +233,50 @@ void Tests::test_copie_elemente() {
 	}
 }
 
+void Tests::test_adauga_cos() {
+	Cos cos;
+	assert(cos.get_cos().empty() == 1);
+	cos.adauga_in_cos(Oferta{ "dsaad", "das", "dsa", 1 });
+	cos.adauga_in_cos(Oferta{ "dsaad", "s", "dsa", 1 });
+	cos.adauga_in_cos(Oferta{ "dsaad", "d", "dsa", 1 });
+	cos.adauga_in_cos(Oferta{ "dsaad", "f", "dsa", 1 });
+	try {
+		cos.adauga_in_cos(Oferta{ "dsaad", "das", "dsa", 1 });
+		assert(false);
+	}
+	catch (MyException&) {
+		assert(true);
+	}
+	assert(cos.get_cos().size() == 4);
+}
+
+void Tests::test_goleste_cos() {
+	Cos cos;
+	assert(cos.get_cos().empty() == 1);
+	cos.adauga_in_cos(Oferta{ "dsaad", "das", "dsa", 1 });
+	cos.adauga_in_cos(Oferta{ "dsaad", "s", "dsa", 1 });
+	cos.adauga_in_cos(Oferta{ "dsaad", "d", "dsa", 1 });
+	cos.adauga_in_cos(Oferta{ "dsaad", "f", "dsa", 1 });
+	assert(cos.get_cos().size() == 4);
+	cos.goleste_cos();
+	assert(cos.get_cos().empty() == 1);
+}
+
+void Tests::test_genereaza_cos() {
+	Cos cos;
+	vector <Oferta> v;
+	v.push_back(Oferta{ "dsadas", "dsa", "dsa", 1 });
+	v.push_back(Oferta{ "dsadasd", "a", "dsa", 1 });
+	v.push_back(Oferta{ "dsadas", "s", "dsa", 1 });
+	v.push_back(Oferta{ "dsadas", "d", "dsa", 1 });
+	v.push_back(Oferta{ "dsadas", "f", "dsa", 1 });
+	v.push_back(Oferta{ "dsadas", "e", "dsa", 1 });
+	cos.genereaza_cos(v, 2);
+	assert(cos.get_cos().size() == 2);
+	cos.genereaza_cos(v, 200);
+	assert(cos.get_cos().size() == 6);
+}
+
 void Tests::test_adauga_oferta_service() {
 	Service service;
 	assert(service.get_elemente().empty() == 1);
@@ -248,14 +292,14 @@ void Tests::test_adauga_oferta_service() {
 		service.get_element_pozitie(10);
 		assert(false);
 	}
-	catch (exception&) {
+	catch (MyException&) {
 		assert(true);
 	}
 	try {
 		service.adauga_oferta_service("asdasd", "dsa", "dsa", 1237);
 		assert(false);
 	}
-	catch (exception&) {
+	catch (MyException&) {
 		assert(true);
 	}
 }
@@ -279,7 +323,7 @@ void Tests::test_sterge_oferta_service() {
 		service.sterge_oferta_service(10);
 		assert(false);
 	}
-	catch (exception&) {
+	catch (MyException&) {
 		assert(true);
 	}
 }
@@ -300,7 +344,7 @@ void Tests::test_modifica_oferta_service() {
 		service.modifica_oferta_service("", "", "", 123, 10);
 		assert(false);
 	}
-	catch (exception&) {
+	catch (MyException&) {
 		assert(true);
 	}
 }
@@ -404,14 +448,95 @@ void Tests::test_sortare_service() {
 		service.sortare_oferte_service(v, 321, 1);
 		assert(false);
 	}
-	catch (exception&) {
+	catch (MyException&) {
 		assert(true);
 	}
+}
+
+void Tests::test_cos_service() {
+	Service service;
+	try {
+		service.generare_oferte_cos_service(120);
+		assert(false);
+	}
+	catch (MyException&) {
+		assert(true);
+	}
+	service.adauga_oferta_service("hzmdyhwtrf", "ngaugcafyq", "aa", 1);
+	service.adauga_oferta_service("fuqwfnmsnl", "fuqwfnmsnl", "bb", 2);
+	service.adauga_oferta_service("aisjctiejg", "nhaugcafyq", "bb", 3);
+	service.adauga_oferta_service("ngaugcafyq", "aisjctiejg", "dd", 5);
+	service.adauga_oferta_service("nhaugcafyq", "hzmdyhwtrf", "dd", 4);
+	assert(service.get_cos_service().empty() == 1);
+	service.adaugare_oferta_in_cos_service("hzmdyhwtrf");
+	assert(service.get_cos_service().size() == 1);
+	try {
+		service.adaugare_oferta_in_cos_service("dsa");
+		assert(false);
+	}
+	catch (MyException&) {
+		assert(true);
+	}
+	service.goleste_cos_service();
+	assert(service.get_cos_service().empty() == 1);
+	service.generare_oferte_cos_service(3);
+	assert(service.get_cos_service().size() == 3);
 }
 
 void Tests::test_vector() {
 	test_vector_dinamic();
 	test_iterator_vector();
+}
+
+void Tests::test_exceptii() {
+	try {
+		throw ValidateException{ "dsa" };
+	}
+	catch (const MyException& ex) {
+		assert(strcmp(ex.what(), "dsa") == 0);
+	}
+	try {
+		throw OfertaExistaInCos{};
+	}
+	catch (const MyException& ex) {
+		assert(strcmp(ex.what(), "Oferta deja exista in cos!") == 0);
+	}
+	try {
+		throw PozitieInvalida{};
+	}
+	catch (const MyException& ex) {
+		assert(strcmp(ex.what(), "Pozitia nu este valida!") == 0);
+	}
+	try {
+		throw OfertaIdentica{};
+	}
+	catch (const MyException& ex) {
+		assert(strcmp(ex.what(), "Nu se pot adauga 2 oferte identice") == 0);
+	}
+	try {
+		throw OptiuneSort{};
+	}
+	catch (const MyException& ex) {
+		assert(strcmp(ex.what(), "Optiunea nu exista!") == 0);
+	}
+	try {
+		throw OfertaNuExista{};
+	}
+	catch (const MyException& ex) {
+		assert(strcmp(ex.what(), "Ofera nu exista!") == 0);
+	}
+	try {
+		throw RepositoryGol{};
+	}
+	catch (const MyException& ex) {
+		assert(strcmp(ex.what(), "Repository-ul nu contine elemente!") == 0);
+	}
+	try {
+		throw NuExistaOptiune{};
+	}
+	catch (const MyException& ex) {
+		assert(strcmp(ex.what(), "Nu exista optiunea introdusa") == 0);
+	}
 }
 
 void Tests::test_domain() {
@@ -426,6 +551,12 @@ void Tests::test_repository() {
 	test_copie_elemente();
 }
 
+void Tests::test_cos() {
+	test_adauga_cos();
+	test_goleste_cos();
+	test_genereaza_cos();
+}
+
 void Tests::test_service() {
 	test_adauga_oferta_service();
 	test_sterge_oferta_service();
@@ -433,11 +564,14 @@ void Tests::test_service() {
 	test_cauta_oferta_service();
 	test_filtrare_service();
 	test_sortare_service();
+	test_cos_service();
 }
 
 void Tests::run_all_tests() {
 	test_vector();
+	test_exceptii();
 	test_domain();
 	test_repository();
+	test_cos();
 	test_service();
 }

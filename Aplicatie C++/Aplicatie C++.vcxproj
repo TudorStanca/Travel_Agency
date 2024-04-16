@@ -134,7 +134,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cos.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MyException.cpp" />
     <ClCompile Include="Oferta.cpp" />
     <ClCompile Include="Repository.cpp" />
     <ClCompile Include="Service.cpp" />
@@ -143,6 +145,8 @@
     <ClCompile Include="VectorDinamic.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cos.h" />
+    <ClInclude Include="MyException.h" />
     <ClInclude Include="Oferta.h" />
     <ClInclude Include="Repository.h" />
     <ClInclude Include="Service.h" />

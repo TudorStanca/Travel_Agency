@@ -36,6 +36,12 @@
     <ClCompile Include="VectorDinamic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Cos.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Oferta.h">
@@ -54,6 +60,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VectorDinamic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cos.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
