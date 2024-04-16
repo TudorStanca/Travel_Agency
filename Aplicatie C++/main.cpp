@@ -1,9 +1,10 @@
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 #include "Tests.h"
 #include "Ui.h"
 #include "Oferta.h"
-
-// validare date de intrare (sa nu crape aplicatia)
-// de facut ui-ul sa arate mai frumos
 
 int main()
 {
@@ -12,6 +13,8 @@ int main()
 
     Ui ui;
     ui.run();
+
+    _CrtDumpMemoryLeaks();
 
     return 0;
 }

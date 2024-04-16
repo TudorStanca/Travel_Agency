@@ -15,7 +15,7 @@ class Oferta {
 	string tip;
 	int pret;
 
-	void validator() const ;
+	void validator() const;
 
 public:
 

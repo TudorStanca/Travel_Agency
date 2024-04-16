@@ -32,7 +32,7 @@ class VectorDinamic {
 	void redimensionare_in_jos();
 
 public:
-	
+
 	/// <summary>
 	/// Constructor pentru vectorul dinamic
 	///		post:
@@ -131,7 +131,7 @@ public:
 	IteratorVector <TElement> end();
 
 	//friend ostream& operator<<(ostream& out, const VectorDinamic<TElement>& vector);
-	
+
 };
 
 template<typename TElement>

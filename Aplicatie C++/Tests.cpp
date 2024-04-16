@@ -120,6 +120,8 @@ void Tests::test_iterator_vector() {
 		assert(el == a[i]);
 		i++;
 	}
+	auto it = v.end();
+	assert(it.valid() == false);
 }
 
 void Tests::test_creeaza_oferta() {
@@ -139,6 +141,14 @@ void Tests::test_creeaza_oferta() {
 	assert(a.get_destinatie() == "asdasd");
 	assert(a.get_tip() == "asdasdasd");
 	assert(a.get_pret() == 1);
+
+	try {
+		Oferta b{ "ds", "", "", -100 };
+		assert(false);
+	}
+	catch (exception&) {
+		assert(true);
+	}
 }
 
 void Tests::test_adauga_oferta() {
@@ -236,6 +246,13 @@ void Tests::test_adauga_oferta_service() {
 	assert(service.get_element_pozitie(0).get_denumire() == "dsa");
 	try {
 		service.get_element_pozitie(10);
+		assert(false);
+	}
+	catch (exception&) {
+		assert(true);
+	}
+	try {
+		service.adauga_oferta_service("asdasd", "dsa", "dsa", 1237);
 		assert(false);
 	}
 	catch (exception&) {

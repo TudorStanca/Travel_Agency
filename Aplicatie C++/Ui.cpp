@@ -1,6 +1,6 @@
 #include "Ui.h"
 
-void Ui::print_menu() const{
+void Ui::print_menu() const {
 	cout << "\n1. Adaugare oferta\n";
 	cout << "2. Stergere oferta\n";
 	cout << "3. Modificare oferta\n";
@@ -13,12 +13,12 @@ void Ui::print_menu() const{
 	cout << "\nInput comanda: ";
 }
 
-void Ui::print_menu_filtrare() const{
+void Ui::print_menu_filtrare() const {
 	cout << "\n1. Filtrare dupa destinatie\n";
 	cout << "2. Filtrare dupa pret\n";
 }
 
-void Ui::print_menu_sortare() const{
+void Ui::print_menu_sortare() const {
 	cout << "\n1. Sortare dupa denumire\n";
 	cout << "2. Sortare dupa destinatie\n";
 	cout << "3. Sortare dupa tip + pret\n";

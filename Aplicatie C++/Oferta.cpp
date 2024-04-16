@@ -4,7 +4,7 @@
 //Oferta::Oferta() : pret{ 0 } {}
 
 void Oferta::validator() const {
-	char errors[200]{""};
+	char errors[200]{ "" };
 
 	if (denumire.size() < 3) {
 		strcat(errors, "\nDenumirea trebuie sa aibe macar 3 caractere");
@@ -72,7 +72,7 @@ bool Oferta::operator==(const Oferta& other) const noexcept {
 	return denumire == other.get_denumire() && destinatie == other.get_destinatie() && tip == other.get_tip() && pret == other.get_pret();
 }
 
-ostream& operator<<(ostream& out, const Oferta& oferta){
+ostream& operator<<(ostream& out, const Oferta& oferta) {
 	out << oferta.denumire << " " << oferta.destinatie << " " << oferta.tip << " " << oferta.pret;
 	return out;
 }

@@ -19,7 +19,7 @@ void Service::adauga_oferta_service(const string& denumire, const string& destin
 	Oferta oferta{ denumire, destinatie, tip, pret };
 	for (int i = 0; i < repository.get_elemente().size(); i++) {
 		if (oferta == repository.get_element_pozitie(i)) {
-			throw exception{"Nu se pot adauga 2 oferte identice"};
+			throw exception{ "Nu se pot adauga 2 oferte identice" };
 		}
 	}
 	repository.adauga_oferta(Oferta{ denumire, destinatie, tip, pret });
