@@ -14,6 +14,7 @@ class Tests {
 	void test_iterator_vector();
 
 	void test_creeaza_oferta();
+	void test_dto();
 
 	void test_adauga_oferta();
 	void test_sterge_oferta();
@@ -31,6 +32,7 @@ class Tests {
 	void test_cauta_oferta_service();
 	void test_filtrare_service();
 	void test_sortare_service();
+	void test_raport_service();
 	void test_cos_service();
 
 	void test_vector();

@@ -16,7 +16,7 @@ public:
 class OfertaException : public MyException {
 
 public:
-	
+
 	OfertaException() = default;
 	virtual const char* what() const throw() = 0;
 };

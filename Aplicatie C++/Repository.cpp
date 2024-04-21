@@ -24,12 +24,15 @@ void Repository::modifica_oferta(const Oferta& oferta_noua, const int& pozitie) 
 	elemente.at(pozitie) = oferta_noua;
 }
 
-// da eroare daca fac cu range for la aritmetica de pointeri
-int Repository::cauta_element(const string& denumire_cautare) const noexcept {
-	for (auto i = 0; i < elemente.size(); i++) {
-		if (elemente.at(i).get_denumire() == denumire_cautare) {
-			return i;
-		}
+int Repository::cauta_element(const string& denumire_cautare) const {
+	//for (auto i = 0; i < elemente.size(); i++) {
+	//	if (elemente.at(i).get_denumire() == denumire_cautare) {
+	//		return i;
+	//	}
+	//}
+	const auto pos = std::distance(elemente.begin(), std::find_if(elemente.begin(), elemente.end(), [denumire_cautare](const Oferta& oferta) noexcept { return oferta.get_denumire() == denumire_cautare; }));
+	if (int(pos) != elemente.size()) {
+		return int(pos);
 	}
 	return -1;
 }

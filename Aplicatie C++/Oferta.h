@@ -93,3 +93,39 @@ public:
 	friend ostream& operator<<(ostream& out, const Oferta& oferta);
 };
 
+class DTO {
+	string tip;
+	int nr_tip;
+
+public:
+
+	/// <summary>
+	/// Constructor default pentru DTO
+	/// </summary>
+	DTO();
+
+	/// <summary>
+	/// Constructor pentru DTO
+	/// </summary>
+	/// <param name="tip"> Tipul DTO-ului </param>
+	DTO(const string& tip);
+
+	/// <summary>
+	/// Getter pentru tip
+	/// </summary>
+	/// <returns> Tipul DTO-ului </returns>
+	const string& get_tip() const;
+
+	/// <summary>
+	/// Getter pentru nr_tip
+	/// </summary>
+	/// <returns> Numarul de tipuri al DTO-ului </returns>
+	const int& get_nr_tip() const;
+
+	/// <summary>
+	/// Incrementeaza numarul de tipuri
+	/// </summary>
+	void increment();
+
+	friend ostream& operator<<(ostream& out, const DTO& dto);
+};

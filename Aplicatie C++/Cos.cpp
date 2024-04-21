@@ -61,4 +61,5 @@ void Cos::export_to_csv(string filename) const {
 	for (const auto& oferta : elemente) {
 		csv_file << oferta.get_denumire() + "," << oferta.get_destinatie() + "," << oferta.get_tip() + "," << std::to_string(oferta.get_pret()) + "," << "\n";
 	}
+	csv_file.close();
 }

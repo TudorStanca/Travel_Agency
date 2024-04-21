@@ -62,6 +62,11 @@ class Ui {
 	void sortare_ui() const;
 
 	/// <summary>
+	/// Functia de ui pentru raport_tip_ui
+	/// </summary>
+	void raport_tip_ui() const;
+
+	/// <summary>
 	/// Functia de ui pentru adaugare_oferte_demo
 	/// </summary>
 	/// <param name="oferte_demo_adaugate"> Verificare daca au fost sau nu adaugate deja ofertele </param>
@@ -72,15 +77,30 @@ class Ui {
 	/// </summary>
 	void afisare_ui() const;
 
+	/// <summary>
+	/// Functia de ui pentru afisare_cos_ui
+	/// </summary>
 	void afisare_cos_ui() const;
 
+	/// <summary>
+	/// Functia de ui pentru goleste_cos_ui
+	/// </summary>
 	void goleste_cos_ui();
 
+	/// <summary>
+	/// Functia de ui pentru adauga_oferta_cos_ui
+	/// </summary>
 	void adauga_oferta_cos_ui();
 
+	/// <summary>
+	/// Functia de ui pentru genereaza_oferte_cos_ui
+	/// </summary>
 	void genereaza_oferte_cos_ui();
 
-	void export_oferte_ui();
+	/// <summary>
+	/// Functia de ui pentru export_oferte_ui
+	/// </summary>
+	void export_oferte_ui() const;
 
 public:
 
@@ -94,6 +114,4 @@ public:
 	/// Functia care ruleaza aplicatia
 	/// </summary>
 	void run();
-
-
 };

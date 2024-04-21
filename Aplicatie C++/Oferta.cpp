@@ -4,7 +4,7 @@
 //Oferta::Oferta() : pret{ 0 } {}
 
 void Oferta::validator() const {
-	string errors="";
+	string errors = "";
 
 	if (denumire.size() < 3) {
 		errors += "\nDenumirea trebuie sa aibe macar 3 caractere";
@@ -20,7 +20,7 @@ void Oferta::validator() const {
 	}
 
 	if (errors.size() > 0) {
-		throw ValidateException{errors};
+		throw ValidateException{ errors };
 	}
 }
 
@@ -74,5 +74,28 @@ bool Oferta::operator==(const Oferta& other) const noexcept {
 
 ostream& operator<<(ostream& out, const Oferta& oferta) {
 	out << oferta.denumire << " " << oferta.destinatie << " " << oferta.tip << " " << oferta.pret;
+	return out;
+}
+
+//------------------------------------------------------------------
+
+DTO::DTO() : tip{ "test" }, nr_tip{ 0 } {}
+
+DTO::DTO(const string& tip) : tip{ tip }, nr_tip{ 1 } {}
+
+const string& DTO::get_tip() const {
+	return tip;
+}
+
+const int& DTO::get_nr_tip() const {
+	return nr_tip;
+}
+
+void DTO::increment() {
+	nr_tip++;
+}
+
+ostream& operator<<(ostream& out, const DTO& dto) {
+	out << dto.tip << ": " << dto.nr_tip;
 	return out;
 }

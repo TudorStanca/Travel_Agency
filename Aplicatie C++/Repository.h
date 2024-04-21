@@ -61,5 +61,5 @@ public:
 	/// </summary>
 	/// <param name="denumire_cautare"> Denumirea dupa care se face cautarea </param>
 	/// <returns> Pozitia ofertei sau -1 daca nu exista </returns>
-	int cauta_element(const string& denumire_cautare) const noexcept;
+	int cauta_element(const string& denumire_cautare) const;
 };

@@ -11,7 +11,7 @@ const Oferta& Service::get_element_pozitie(const int& pozitie) const {
 	return repository.get_element_pozitie(pozitie);
 }
 
-vector<Oferta> Service::get_copie_elemente() const noexcept {
+vector<Oferta> Service::get_copie_elemente() const {
 	return repository.get_elemente();
 }
 
@@ -40,13 +40,13 @@ void Service::modifica_oferta_service(const string& denumire, const string& dest
 	repository.modifica_oferta(oferta_noua, pozitie);
 }
 
-int Service::cauta_oferta_service(const string& denumire) const noexcept {
+int Service::cauta_oferta_service(const string& denumire) const {
 	return repository.cauta_element(denumire);
 }
 
 vector <Oferta> Service::filtrare_oferte_service(const string& destinatie) const {
 	vector <Oferta> v;
-	copy_if(repository.get_elemente().begin(), repository.get_elemente().end(), back_inserter(v), [destinatie](const Oferta& a) {return a.get_destinatie() == destinatie; });
+	copy_if(repository.get_elemente().begin(), repository.get_elemente().end(), back_inserter(v), [destinatie](const Oferta& a) noexcept {return a.get_destinatie() == destinatie; });
 	return v;
 }
 
@@ -59,18 +59,31 @@ vector <Oferta> Service::filtrare_oferte_service(const int& pret) const noexcept
 void Service::sortare_oferte_service(vector <Oferta>& v, const int& varianta, const bool& reversed) const {
 	switch (varianta) {
 	case 1: // denumire
-		sort(v.begin(), v.end(), [reversed](const Oferta& a, const Oferta& b) {  if (a.get_denumire() <= b.get_denumire()) { return !(reversed); } return reversed; });
+		sort(v.begin(), v.end(), [reversed](const Oferta& a, const Oferta& b) noexcept {  if (a.get_denumire() <= b.get_denumire()) { return !(reversed); } return reversed; });
 		break;
 	case 2: // destinatie
-		sort(v.begin(), v.end(), [reversed](const Oferta& a, const Oferta& b) {  if (a.get_destinatie() <= b.get_destinatie()) { return !(reversed); } return reversed; });
+		sort(v.begin(), v.end(), [reversed](const Oferta& a, const Oferta& b) noexcept {  if (a.get_destinatie() <= b.get_destinatie()) { return !(reversed); } return reversed; });
 		break;
 	case 3: // tip + pret
-		sort(v.begin(), v.end(), [reversed](const Oferta& a, const Oferta& b) {  if (a.get_tip() < b.get_tip()) { return !(reversed); } else if (a.get_tip() == b.get_tip()) { if (a.get_pret() <= b.get_pret()) { return !(reversed); } } return reversed; });
+		sort(v.begin(), v.end(), [reversed](const Oferta& a, const Oferta& b) noexcept {  if (a.get_tip() < b.get_tip()) { return !(reversed); } else if (a.get_tip() == b.get_tip()) { if (a.get_pret() <= b.get_pret()) { return !(reversed); } } return reversed; });
 		break;
 	default:
 		throw OptiuneSort{};
 		break;
 	}
+}
+
+map<string, DTO> Service::raport_tip_service() const {
+	map<string, DTO> raport;
+	for (const auto& oferta : repository.get_elemente()) {
+		if (raport.count(oferta.get_tip()) == 0) {
+			raport[oferta.get_tip()] = DTO{ oferta.get_tip() };
+		}
+		else {
+			raport[oferta.get_tip()].increment();
+		}
+	}
+	return raport;
 }
 
 const vector<Oferta>& Service::get_cos_service() const {
@@ -96,6 +109,6 @@ int Service::generare_oferte_cos_service(const int& nr_oferte) {
 	return cos.genereaza_cos(repository.get_elemente(), nr_oferte);
 }
 
-void Service::export_to_csv_service(const string& filename) {
+void Service::export_to_csv_service(const string& filename) const {
 	cos.export_to_csv(filename);
 }

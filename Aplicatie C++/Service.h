@@ -2,8 +2,10 @@
 #include "Repository.h"
 #include "Cos.h"
 #include <iterator>
+#include <map>
 
 using std::copy_if;
+using std::map;
 using std::back_inserter;
 
 class Service {
@@ -36,7 +38,7 @@ public:
 	/// Getter pentro vectorul de elemente
 	/// </summary>
 	/// <returns> O copie a vectorului de elemente </returns>
-	vector <Oferta> get_copie_elemente() const noexcept;
+	vector <Oferta> get_copie_elemente() const;
 
 	/// <summary>
 	/// Adauga o oferta in repository
@@ -68,7 +70,7 @@ public:
 	/// </summary>
 	/// <param name="denumire"> Denumirea dupa care se face cautarea </param>
 	/// <returns> Pozitia elementului gasit sau -1 altfel </returns>
-	int cauta_oferta_service(const string& denumire) const noexcept;
+	int cauta_oferta_service(const string& denumire) const;
 
 	/// <summary>
 	/// Filtreaza vectorul de oferte dupa o destinatie
@@ -92,14 +94,39 @@ public:
 	/// <param name="reversed"> Sortare crescatoare / descrescatoare </param>
 	void sortare_oferte_service(vector <Oferta>& v, const int& varianta, const bool& reversed) const;
 
+	/// <summary>
+	/// Creeaza un raport dupa tipurile din service
+	/// </summary>
+	/// <returns> Un map unde se afla raportul </returns>
+	map <string, DTO> raport_tip_service() const;
+
+	/// <summary>
+	/// Getter pentru elementele din cos
+	/// </summary>
+	/// <returns> Vector cu elementele din cos </returns>
 	const vector <Oferta>& get_cos_service() const;
 
+	/// <summary>
+	/// Sterge ofertele din cos
+	/// </summary>
 	void goleste_cos_service();
 
+	/// <summary>
+	/// Adauga o oferta in cos dupa denumirea ei
+	/// </summary>
+	/// <param name="denumire"> Denumirea ofertei care va fi adaugata </param>
 	void adaugare_oferta_in_cos_service(const string& denumire);
 
+	/// <summary>
+	/// Genereaza un nr de oferte in cos
+	/// </summary>
+	/// <param name="nr_oferte"> Numarul de oferte generate in cos </param>
+	/// <returns> Numarul de oferte generate cu succes </returns>
 	int generare_oferte_cos_service(const int& nr_oferte);
 
-	void export_to_csv_service(const string& filename);
+	/// <summary>
+	/// Exporta intr-un fisier csv ofertele din cos
+	/// </summary>
+	/// <param name="filename"> Numele fisierului in care se face exportul </param>
+	void export_to_csv_service(const string& filename) const;
 };
-

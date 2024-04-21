@@ -151,6 +151,17 @@ void Tests::test_creeaza_oferta() {
 	}
 }
 
+void Tests::test_dto() {
+	DTO b{};
+	assert(b.get_tip() == "test");
+	assert(b.get_nr_tip() == 0);
+	DTO a{ "haha" };
+	assert(a.get_tip() == "haha");
+	assert(a.get_nr_tip() == 1);
+	a.increment();
+	assert(a.get_nr_tip() == 2);
+}
+
 void Tests::test_adauga_oferta() {
 	Repository repository;
 
@@ -453,6 +464,21 @@ void Tests::test_sortare_service() {
 	}
 }
 
+void Tests::test_raport_service() {
+	Service service;
+	map<string, DTO> raport = service.raport_tip_service();
+	assert(raport.empty() == 1);
+	service.adauga_oferta_service("hzmdyhwtrf", "ngaugcafyq", "aa", 1);
+	service.adauga_oferta_service("fuqwfnmsnl", "fuqwfnmsnl", "bb", 2);
+	service.adauga_oferta_service("aisjctiejg", "nhaugcafyq", "bb", 3);
+	service.adauga_oferta_service("ngaugcafyq", "aisjctiejg", "dd", 5);
+	service.adauga_oferta_service("nhaugcafyq", "hzmdyhwtrf", "dd", 4);
+	raport = service.raport_tip_service();
+	assert(raport["aa"].get_nr_tip() == 1);
+	assert(raport["bb"].get_nr_tip() == 2);
+	assert(raport["dd"].get_nr_tip() == 2);
+}
+
 void Tests::test_cos_service() {
 	Service service;
 	try {
@@ -541,6 +567,7 @@ void Tests::test_exceptii() {
 
 void Tests::test_domain() {
 	test_creeaza_oferta();
+	test_dto();
 }
 
 void Tests::test_repository() {
@@ -564,6 +591,7 @@ void Tests::test_service() {
 	test_cauta_oferta_service();
 	test_filtrare_service();
 	test_sortare_service();
+	test_raport_service();
 	test_cos_service();
 }
 

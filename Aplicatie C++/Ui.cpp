@@ -7,7 +7,8 @@ void Ui::print_menu() const {
 	cout << "4. Cauta oferta dupa denumire			b. Goleste cos\n";
 	cout << "5. Filtrare oferte turistice			c. Adauga oferta in cos\n";
 	cout << "6. Sortare oferte turistice			d. Genereaza oferte in cos\n";
-	cout << "8. Adaugare oferte demo				e. Export cos\n";
+	cout << "7. Creeaza raport dupa tip			e.Export cos\n";
+	cout << "8. Adaugare oferte demo\n";
 	cout << "9. Afisare lista oferte\n";
 	cout << "0. Exit\n";
 	cout << "\nInput comanda: ";
@@ -139,6 +140,18 @@ void Ui::sortare_ui() const {
 	afisare_vector_oferte(v);
 }
 
+void Ui::raport_tip_ui() const {
+	if (service.get_elemente().empty() == 1) {
+		cout << "\nRepository-ul este gol, nu se poate face un raport!\n";
+		return;
+	}
+	const auto& raport = service.raport_tip_service();
+	cout << "\nRaport pentru tip: \n";
+	for (const auto& el : raport) {
+		cout << el.second << "\n";
+	}
+}
+
 void Ui::adaugare_oferte_demo_ui(const bool& oferte_demo_adaugate) {
 	if (oferte_demo_adaugate == true) {
 		cout << "\nOfertele demo au fost adaugate deja!\n";
@@ -201,7 +214,7 @@ void Ui::genereaza_oferte_cos_ui() {
 	cout << "\nNumar oferte in cos: " << service.get_cos_service().size() << "\n";
 }
 
-void Ui::export_oferte_ui() {
+void Ui::export_oferte_ui() const {
 	string filename;
 	cout << "\nInput nume fisier: ", cin >> filename;
 	service.export_to_csv_service(filename);
@@ -234,6 +247,9 @@ void Ui::run() {
 				break;
 			case '6':
 				sortare_ui();
+				break;
+			case '7':
+				raport_tip_ui();
 				break;
 			case '8':
 				adaugare_oferte_demo_ui(oferte_demo_adaugate);
