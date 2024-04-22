@@ -13,60 +13,118 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\domain">
+      <UniqueIdentifier>{1ed0a8ae-b408-4b7d-bd7d-beae7dc4c936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\repository">
+      <UniqueIdentifier>{335a8bba-9efd-4263-9f0a-0984986700e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\service">
+      <UniqueIdentifier>{24dd9a00-8234-417f-88ef-475e2b4691b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui">
+      <UniqueIdentifier>{4dbbfae2-ca14-4152-9e7c-db65b9a7e558}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{fb7e1489-f35d-4d72-90ad-c362ec2a766c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\domain">
+      <UniqueIdentifier>{670f3d67-3f46-4ab2-afca-9f0b57dbc7b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\repository">
+      <UniqueIdentifier>{8e1cc523-9912-4a73-975c-468388963a90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\service">
+      <UniqueIdentifier>{356bef03-fa0a-481d-973a-debb8be5d13c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui">
+      <UniqueIdentifier>{5b380f21-4a8b-4e9b-884d-03663905ff90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\utils">
+      <UniqueIdentifier>{4ad5f74f-a56f-4096-b659-88f7fa5ab3c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tests">
+      <UniqueIdentifier>{26a1a990-2763-4fba-9b25-a7c143a68943}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\tests">
+      <UniqueIdentifier>{5daf75d6-0734-4160-a622-875193cc7424}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Oferta.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="VectorDinamic.cpp">
+      <Filter>Source Files\utils</Filter>
     </ClCompile>
-    <ClCompile Include="Tests.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Oferta.cpp">
+      <Filter>Source Files\domain</Filter>
     </ClCompile>
     <ClCompile Include="Repository.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\repository</Filter>
     </ClCompile>
     <ClCompile Include="Service.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\service</Filter>
     </ClCompile>
     <ClCompile Include="Ui.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VectorDinamic.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ui</Filter>
     </ClCompile>
     <ClCompile Include="Cos.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\service</Filter>
     </ClCompile>
     <ClCompile Include="MyException.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests.cpp">
+      <Filter>Source Files\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="ActiuneUndo.cpp">
+      <Filter>Source Files\service</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Oferta.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Tests.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Repository.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Service.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ui.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VectorDinamic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Cos.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\service</Filter>
     </ClInclude>
     <ClInclude Include="MyException.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\utils</Filter>
     </ClInclude>
+    <ClInclude Include="VectorDinamic.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Ui.h">
+      <Filter>Header Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Oferta.h">
+      <Filter>Header Files\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="Repository.h">
+      <Filter>Header Files\repository</Filter>
+    </ClInclude>
+    <ClInclude Include="Service.h">
+      <Filter>Header Files\service</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests.h">
+      <Filter>Header Files\tests</Filter>
+    </ClInclude>
+    <ClInclude Include="ActiuneUndo.h">
+      <Filter>Header Files\service</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Oferte.txt">
+      <Filter>Source Files\repository</Filter>
+    </Text>
+    <Text Include="fisier_test_repository.txt">
+      <Filter>Source Files\tests</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fisier_test_csv.csv">
+      <Filter>Source Files\tests</Filter>
+    </None>
+    <None Include="fisier_test_csv_service.csv">
+      <Filter>Source Files\tests</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -55,4 +55,3 @@ public:
 	void export_to_csv(string filename) const;
 
 };
-

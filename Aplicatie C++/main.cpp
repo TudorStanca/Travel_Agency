@@ -5,15 +5,18 @@
 #include "Tests.h"
 #include "Ui.h"
 
-// de modificat ofertele din cos daca sunt sterse/modificate in repo
-// de facut meniul mai frumos
+// de testat undo
 
 void run_program() {
 
-    Tests teste;
+    Tests teste{};
     teste.run_all_tests();
 
-    //Ui ui;
+    //Repository repository{};
+    //RepoToFile repository{"Oferte.txt"};
+    //Cos cos{};
+    //Service service{ repository, cos };
+    //Ui ui{service};
     //ui.run();
 
 }

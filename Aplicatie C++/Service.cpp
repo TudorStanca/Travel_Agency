@@ -1,5 +1,14 @@
 #include "Service.h"
 
+Service::Service(Repository& repository, const Cos& cos) : repository{ repository }, cos{ cos } {}
+
+Service::~Service() {
+	while (vector_undo.empty() == false) {
+		delete vector_undo.back();
+		vector_undo.pop_back();
+	}
+}
+
 const vector<Oferta>& Service::get_elemente() const noexcept {
 	return repository.get_elemente();
 }
@@ -22,14 +31,17 @@ void Service::adauga_oferta_service(const string& denumire, const string& destin
 			throw OfertaIdentica{};
 		}
 	}
-	repository.adauga_oferta(Oferta{ denumire, destinatie, tip, pret });
+	repository.adauga_oferta(oferta);
+	vector_undo.push_back(new UndoAdauga{ repository, oferta });
 }
 
 void Service::sterge_oferta_service(const int& pozitie) {
 	if (pozitie < 0 || pozitie >= repository.get_elemente().size()) {
 		throw PozitieInvalida{};
 	}
+	Oferta oferta_stearsa = repository.get_element_pozitie(pozitie);
 	repository.sterge_oferta(pozitie);
+	vector_undo.push_back(new UndoSterge{ repository, oferta_stearsa, pozitie });
 }
 
 void Service::modifica_oferta_service(const string& denumire, const string& destinatie, const string& tip, const int& pret, const int& pozitie) {
@@ -37,7 +49,9 @@ void Service::modifica_oferta_service(const string& denumire, const string& dest
 		throw PozitieInvalida{};
 	}
 	Oferta oferta_noua{ denumire, destinatie, tip, pret };
+	Oferta oferta_veche = repository.get_element_pozitie(pozitie);
 	repository.modifica_oferta(oferta_noua, pozitie);
+	vector_undo.push_back(new UndoModifica{ repository, oferta_veche, pozitie });
 }
 
 int Service::cauta_oferta_service(const string& denumire) const {
@@ -100,6 +114,16 @@ void Service::adaugare_oferta_in_cos_service(const string& denumire) {
 		throw OfertaNuExista{};
 	}
 	cos.adauga_in_cos(repository.get_element_pozitie(pozitie_oferta));
+}
+
+void Service::undo_service() {
+	if (vector_undo.empty() == true) {
+		throw NuMaiSuntOperatiiUndo{};
+	}
+	ActiuneUndo* act = vector_undo.back();
+	act->doUndo();
+	vector_undo.pop_back();
+	delete act;
 }
 
 int Service::generare_oferte_cos_service(const int& nr_oferte) {

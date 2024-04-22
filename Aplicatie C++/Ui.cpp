@@ -10,6 +10,7 @@ void Ui::print_menu() const {
 	cout << "7. Creeaza raport dupa tip			e.Export cos\n";
 	cout << "8. Adaugare oferte demo\n";
 	cout << "9. Afisare lista oferte\n";
+	cout << "u. Undo\n";
 	cout << "0. Exit\n";
 	cout << "\nInput comanda: ";
 }
@@ -173,6 +174,11 @@ void Ui::afisare_ui() const {
 	afisare_vector_oferte(service.get_elemente());
 }
 
+void Ui::undo_ui() {
+	service.undo_service();
+	cout << "\nS-a efectuat undo cu succes!\n";
+}
+
 void Ui::afisare_cos_ui() const {
 	if (service.get_cos_service().empty() == 1) {
 		cout << "\nCosul este gol!\n";
@@ -222,6 +228,8 @@ void Ui::export_oferte_ui() const {
 	cout << "\nNumar oferte in cos: " << service.get_cos_service().size() << "\n";
 }
 
+Ui::Ui(const Service& service) : service{ service } {}
+
 void Ui::run() {
 	bool rulare = true, oferte_demo_adaugate = false;
 	char comanda;
@@ -257,6 +265,9 @@ void Ui::run() {
 				break;
 			case '9':
 				afisare_ui();
+				break;
+			case 'u':
+				undo_ui();
 				break;
 			case 'a':
 				afisare_cos_ui();

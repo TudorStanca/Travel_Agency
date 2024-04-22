@@ -1,6 +1,5 @@
 #pragma once
 #include "Service.h"
-#include <sstream>
 
 using std::stringstream;
 using std::cin;
@@ -77,6 +76,8 @@ class Ui {
 	/// </summary>
 	void afisare_ui() const;
 
+	void undo_ui();
+
 	/// <summary>
 	/// Functia de ui pentru afisare_cos_ui
 	/// </summary>
@@ -107,7 +108,7 @@ public:
 	/// <summary>
 	/// Constructor pentru ui
 	/// </summary>
-	Ui() = default;
+	Ui(const Service& service);
 	Ui(const Ui& ui) = delete; //nu se poate copia
 
 	/// <summary>

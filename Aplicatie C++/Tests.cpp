@@ -151,6 +151,13 @@ void Tests::test_creeaza_oferta() {
 	}
 }
 
+void Tests::test_operator_afisare() {
+	Oferta oferta{ "dsad", "asd", "has", 100 };
+	ostringstream os;
+	os << oferta;
+	assert(os.str() == "dsad asd has 100");
+}
+
 void Tests::test_dto() {
 	DTO b{};
 	assert(b.get_tip() == "test");
@@ -160,6 +167,14 @@ void Tests::test_dto() {
 	assert(a.get_nr_tip() == 1);
 	a.increment();
 	assert(a.get_nr_tip() == 2);
+}
+
+void Tests::test_dto_operator_afisare() {
+	DTO dto{"haha"};
+	dto.increment();
+	ostringstream os;
+	os << dto;
+	assert(os.str() == "haha: 2");
 }
 
 void Tests::test_adauga_oferta() {
@@ -244,6 +259,25 @@ void Tests::test_copie_elemente() {
 	}
 }
 
+void Tests::test_repo_with_file() {
+	RepoToFile repository{ "fisier_test_repository.txt" };
+	Oferta o1{ "dsad", "dsa", "dsa", 100 };
+	Oferta o2{ "asdf", "dsa", "dsa", 100 };
+	Oferta o3{ "rewq", "dsa", "dsa", 100 };
+	auto v = repository.get_elemente();
+	assert(v.at(0) == o1);
+	assert(v.at(1) == o2);
+	assert(v.at(2) == o3);
+	Oferta o4{ "1234", "5678", "9", 100 };
+	repository.adauga_oferta(o4);
+	assert(repository.get_elemente().at(3) == o4);
+	Oferta o5{ "1234", "5678", "9", 200 };
+	repository.modifica_oferta(o5, 3);
+	assert(repository.get_elemente().at(3) == o5);
+	repository.sterge_oferta(3);
+	assert(repository.get_elemente().size() == 3);
+}
+
 void Tests::test_adauga_cos() {
 	Cos cos;
 	assert(cos.get_cos().empty() == 1);
@@ -288,8 +322,32 @@ void Tests::test_genereaza_cos() {
 	assert(cos.get_cos().size() == 6);
 }
 
+void Tests::test_export_csv_cos() {
+	Cos cos;
+	cos.adauga_in_cos(Oferta{ "dsad", "dsa", "dsa", 100 });
+	cos.adauga_in_cos(Oferta{ "asdf", "dsa", "dsa", 100 });
+	cos.adauga_in_cos(Oferta{ "qwre", "dsa", "dsa", 100 });
+	cos.adauga_in_cos(Oferta{ "zxcvz", "dsa", "dsa", 100 });
+	cos.export_to_csv("fisier_test_csv");
+
+	ifstream fin("fisier_test_csv.csv");
+	assert(fin.is_open() == true);
+	assert (fin.eof() == false);
+	string s1, s2, s3, s4;
+	getline(fin, s1);
+	assert(s1 == "dsad,dsa,dsa,100,");
+	getline(fin, s2);
+	assert(s2 == "asdf,dsa,dsa,100,");
+	getline(fin, s3);
+	assert(s3 == "qwre,dsa,dsa,100,");
+	getline(fin, s4);
+	assert(s4 == "zxcvz,dsa,dsa,100,");
+}
+
 void Tests::test_adauga_oferta_service() {
-	Service service;
+	Repository repository;
+	Cos cos;
+	Service service{repository, cos};
 	assert(service.get_elemente().empty() == 1);
 
 	service.adauga_oferta_service("dsa", "dsa", "dsa", 123);
@@ -316,7 +374,9 @@ void Tests::test_adauga_oferta_service() {
 }
 
 void Tests::test_sterge_oferta_service() {
-	Service service;
+	Repository repository;
+	Cos cos;
+	Service service{ repository, cos };
 	service.adauga_oferta_service("dsa", "dsa", "dsa", 123);
 	service.adauga_oferta_service("dsadsadsa", "dsa", "dsa", 1234);
 	service.adauga_oferta_service("dsadsa", "dsa", "dsa", 1235);
@@ -340,7 +400,9 @@ void Tests::test_sterge_oferta_service() {
 }
 
 void Tests::test_modifica_oferta_service() {
-	Service service;
+	Repository repository;
+	Cos cos;
+	Service service{ repository, cos };
 	service.adauga_oferta_service("dsa", "dsa", "dsa", 123);
 	service.adauga_oferta_service("dsadsadsa", "dsa", "dsa", 1234);
 	service.adauga_oferta_service("dsadsa", "dsa", "dsa", 1235);
@@ -361,7 +423,9 @@ void Tests::test_modifica_oferta_service() {
 }
 
 void Tests::test_cauta_oferta_service() {
-	Service service;
+	Repository repository;
+	Cos cos;
+	Service service{ repository, cos };
 	service.adauga_oferta_service("dsa", "dsa", "dsa", 123);
 	service.adauga_oferta_service("dsadsadsa", "dsa", "dsa", 1234);
 	service.adauga_oferta_service("dsadsa", "dsa", "dsa", 1235);
@@ -376,7 +440,9 @@ void Tests::test_cauta_oferta_service() {
 }
 
 void Tests::test_filtrare_service() {
-	Service service;
+	Repository repository;
+	Cos cos;
+	Service service{ repository, cos };
 	service.adauga_oferta_service("hzmdyhwtrf", "ngaugcafyq", "aa", 1);
 	service.adauga_oferta_service("fuqwfnmsnl", "fuqwfnmsnl", "bb", 2);
 	service.adauga_oferta_service("aisjctiejg", "nhaugcafyq", "bb", 3);
@@ -404,7 +470,9 @@ void Tests::test_filtrare_service() {
 }
 
 void Tests::test_sortare_service() {
-	Service service;
+	Repository repository;
+	Cos cos;
+	Service service{ repository, cos };
 	service.adauga_oferta_service("hzmdyhwtrf", "ngaugcafyq", "aa", 1);
 	service.adauga_oferta_service("fuqwfnmsnl", "fuqwfnmsnl", "bb", 2);
 	service.adauga_oferta_service("aisjctiejg", "nhaugcafyq", "bb", 3);
@@ -465,7 +533,9 @@ void Tests::test_sortare_service() {
 }
 
 void Tests::test_raport_service() {
-	Service service;
+	Repository repository;
+	Cos cos;
+	Service service{ repository, cos };
 	map<string, DTO> raport = service.raport_tip_service();
 	assert(raport.empty() == 1);
 	service.adauga_oferta_service("hzmdyhwtrf", "ngaugcafyq", "aa", 1);
@@ -480,7 +550,9 @@ void Tests::test_raport_service() {
 }
 
 void Tests::test_cos_service() {
-	Service service;
+	Repository repository;
+	Cos cos;
+	Service service{ repository, cos };
 	try {
 		service.generare_oferte_cos_service(120);
 		assert(false);
@@ -507,6 +579,23 @@ void Tests::test_cos_service() {
 	assert(service.get_cos_service().empty() == 1);
 	service.generare_oferte_cos_service(3);
 	assert(service.get_cos_service().size() == 3);
+
+	service.goleste_cos_service();
+	service.adaugare_oferta_in_cos_service("hzmdyhwtrf");
+	service.adaugare_oferta_in_cos_service("fuqwfnmsnl");
+	service.adaugare_oferta_in_cos_service("aisjctiejg");
+	service.export_to_csv_service("fisier_test_csv_service");
+
+	ifstream fin("fisier_test_csv_service.csv");
+	assert(fin.is_open() == true);
+	assert(fin.eof() == false);
+	string s1, s2, s3;
+	getline(fin, s1);
+	assert(s1 == "hzmdyhwtrf,ngaugcafyq,aa,1,");
+	getline(fin, s2);
+	assert(s2 == "fuqwfnmsnl,fuqwfnmsnl,bb,2,");
+	getline(fin, s3);
+	assert(s3 == "aisjctiejg,nhaugcafyq,bb,3,");
 }
 
 void Tests::test_vector() {
@@ -520,6 +609,12 @@ void Tests::test_exceptii() {
 	}
 	catch (const MyException& ex) {
 		assert(strcmp(ex.what(), "dsa") == 0);
+	}
+	try {
+		throw FileNotOpen{ "nu e deschis" };
+	}
+	catch (const MyException& ex) {
+		assert(strcmp(ex.what(), "nu e deschis") == 0);
 	}
 	try {
 		throw OfertaExistaInCos{};
@@ -567,7 +662,9 @@ void Tests::test_exceptii() {
 
 void Tests::test_domain() {
 	test_creeaza_oferta();
+	test_operator_afisare();
 	test_dto();
+	test_dto_operator_afisare();
 }
 
 void Tests::test_repository() {
@@ -576,12 +673,14 @@ void Tests::test_repository() {
 	test_modifica_oferta();
 	test_cauta_oferta();
 	test_copie_elemente();
+	test_repo_with_file();
 }
 
 void Tests::test_cos() {
 	test_adauga_cos();
 	test_goleste_cos();
 	test_genereaza_cos();
+	test_export_csv_cos();
 }
 
 void Tests::test_service() {

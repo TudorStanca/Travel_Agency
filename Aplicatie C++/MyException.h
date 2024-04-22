@@ -41,6 +41,17 @@ public:
 	virtual const char* what() const throw() = 0;
 };
 
+class FileNotOpen : public RepoException {
+
+	string msg;
+
+public:
+
+	FileNotOpen(const string& filepath);
+	const char* what() const throw();
+
+};
+
 //-----------------------------------------------------------------------------------
 
 class CosException : public MyException {
@@ -106,6 +117,14 @@ class RepositoryGol : public ServiceException {
 public:
 
 	RepositoryGol() = default;
+	const char* what() const throw();
+};
+
+class NuMaiSuntOperatiiUndo : public ServiceException {
+
+public:
+
+	NuMaiSuntOperatiiUndo() = default;
 	const char* what() const throw();
 };
 

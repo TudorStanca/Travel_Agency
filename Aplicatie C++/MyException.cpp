@@ -33,3 +33,13 @@ const char* RepositoryGol::what() const throw() {
 const char* NuExistaOptiune::what() const throw() {
 	return "Nu exista optiunea introdusa";
 }
+
+FileNotOpen::FileNotOpen(const string& msg) : RepoException{}, msg{ msg } {}
+
+const char* FileNotOpen::what() const throw() {
+	return msg.c_str();
+}
+
+const char* NuMaiSuntOperatiiUndo::what() const throw() {
+	return "Nu mai exista operatii pentru a face undo";
+}

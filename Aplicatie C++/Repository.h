@@ -2,8 +2,12 @@
 #include "Oferta.h"
 #include "VectorDinamic.h"
 #include <vector>
+#include <fstream>
 #include <algorithm>
 
+using std::ifstream;
+using std::ofstream;
+using std::getline;
 using std::vector;
 
 class Repository {
@@ -16,7 +20,6 @@ public:
 	/// Constructorul default pentru repository
 	/// </summary>
 	Repository() = default;
-	Repository(const Repository& repo) = delete; // repository nu poate fi copiat
 
 	/// <summary>
 	/// Getter pentru vectorul de oferte
@@ -41,20 +44,22 @@ public:
 	/// Adauga o oferta in repository
 	/// </summary>
 	/// <param name="oferta"> Oferta care va fi adaugata </param>
-	void adauga_oferta(const Oferta& oferta);
+	virtual void adauga_oferta(const Oferta& oferta);
+
+	void adauga_oferta_pe_pozitie(const Oferta& oferta, const int& pozitie);
 
 	/// <summary>
 	/// Sterge o ofera din repository de pe o pozitie data
 	/// </summary>
 	/// <param name="pozitie"> Pozitia ofertei care va fi stearsa </param>
-	void sterge_oferta(const int& pozitie) noexcept;
+	virtual void sterge_oferta(const int& pozitie);
 
 	/// <summary>
 	/// Modifica o oferta din repository cu o alta oferta noua
 	/// </summary>
 	/// <param name="oferta_noua"> Noua oferta care va inlocui vechea oferta </param>
 	/// <param name="pozitie"> Pozitia pe care se afla vechea oferta </param>
-	void modifica_oferta(const Oferta& oferta_noua, const int& pozitie);
+	virtual void modifica_oferta(const Oferta& oferta_noua, const int& pozitie);
 
 	/// <summary>
 	/// Cauta o oferta dupa denumirea ei
@@ -62,4 +67,23 @@ public:
 	/// <param name="denumire_cautare"> Denumirea dupa care se face cautarea </param>
 	/// <returns> Pozitia ofertei sau -1 daca nu exista </returns>
 	int cauta_element(const string& denumire_cautare) const;
+};
+
+class RepoToFile : public Repository {
+
+	string filepath;
+	void read_from_file();
+	void write_to_file() const;
+
+public:
+
+	RepoToFile(const string& filepath);
+	RepoToFile(const RepoToFile& repo) = delete;
+
+	void adauga_oferta(const Oferta& oferta);
+
+	void sterge_oferta(const int& pozitie);
+
+	void modifica_oferta(const Oferta& oferta_noua, const int& pozitie);
+
 };

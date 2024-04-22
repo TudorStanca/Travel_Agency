@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ActiuneUndo.cpp" />
     <ClCompile Include="Cos.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyException.cpp" />
@@ -145,6 +146,7 @@
     <ClCompile Include="VectorDinamic.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActiuneUndo.h" />
     <ClInclude Include="Cos.h" />
     <ClInclude Include="MyException.h" />
     <ClInclude Include="Oferta.h" />
@@ -153,6 +155,14 @@
     <ClInclude Include="Tests.h" />
     <ClInclude Include="Ui.h" />
     <ClInclude Include="VectorDinamic.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="fisier_test_repository.txt" />
+    <Text Include="Oferte.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fisier_test_csv.csv" />
+    <None Include="fisier_test_csv_service.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

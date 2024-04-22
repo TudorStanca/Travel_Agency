@@ -1,6 +1,7 @@
 #pragma once
 #include "Repository.h"
 #include "Cos.h"
+#include "ActiuneUndo.h"
 #include <iterator>
 #include <map>
 
@@ -10,16 +11,18 @@ using std::back_inserter;
 
 class Service {
 
-	Repository repository;
+	Repository& repository;
 	Cos cos;
+	vector <ActiuneUndo*> vector_undo;
 
 public:
 
 	/// <summary>
 	/// Constructor default pentru service
 	/// </summary>
-	Service() = default;
-	Service(const Service& service) = delete; //nu poate fi copiat
+	Service(Repository& repository, const Cos& cos);
+
+	~Service();
 
 	/// <summary>
 	/// Getter pentru vectorul de oferte
@@ -93,6 +96,8 @@ public:
 	/// <param name="varianta"> Criteriul de sortare </param>
 	/// <param name="reversed"> Sortare crescatoare / descrescatoare </param>
 	void sortare_oferte_service(vector <Oferta>& v, const int& varianta, const bool& reversed) const;
+
+	void undo_service();
 
 	/// <summary>
 	/// Creeaza un raport dupa tipurile din service
