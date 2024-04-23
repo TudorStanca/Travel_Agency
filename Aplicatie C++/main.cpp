@@ -13,11 +13,11 @@ void run_program() {
     teste.run_all_tests();
 
     //Repository repository{};
-    //RepoToFile repository{"Oferte.txt"};
-    //Cos cos{};
-    //Service service{ repository, cos };
-    //Ui ui{service};
-    //ui.run();
+    RepoToFile repository{"Oferte.txt"};
+    Cos cos{};
+    Service service{ repository, cos };
+    Ui ui{service};
+    ui.run();
 
 }
 

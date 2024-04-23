@@ -189,6 +189,10 @@ void Tests::test_adauga_oferta() {
 	assert(repository.get_elemente().size() == 5);
 	assert(repository.get_element_pozitie(0).get_denumire() == "dsa");
 	assert(repository.get_element_pozitie(4).get_pret() == 1237);
+
+	Oferta a{ "dsa", "qwe", "cxz", 321 };
+	repository.adauga_oferta_pe_pozitie(a, 1);
+	assert(repository.get_element_pozitie(1) == a);
 }
 
 void Tests::test_sterge_oferta() {
@@ -598,6 +602,72 @@ void Tests::test_cos_service() {
 	assert(s3 == "aisjctiejg,nhaugcafyq,bb,3,");
 }
 
+void Tests::test_undo_service() {
+	Repository repository;
+	Cos cos;
+	Service service{ repository, cos };
+
+	Oferta a{ "dsa", "dsa", "dsa", 1 };
+	Oferta b{ "dsa", "dsa", "dsa", 2 };
+	Oferta c{ "dsa", "dsa", "dsa", 3 };
+	Oferta d{ "dsa", "dsa", "dsa", 4 };
+	Oferta e{ "dsa", "dsa", "dsa", 5 };
+
+	try {
+		service.undo_service();
+		assert(false);
+	}
+	catch (MyException&) {
+		assert(true);
+	}
+
+	assert(service.get_elemente().empty() == true);
+	service.adauga_oferta_service("dsa", "dsa", "dsa", 1);
+	assert(service.get_elemente().size() == 1);
+	service.undo_service();
+	assert(service.get_elemente().empty() == true);
+
+	service.adauga_oferta_service("dsa", "dsa", "dsa", 1);
+	service.sterge_oferta_service(0);
+	assert(service.get_elemente().empty() == true);
+	service.undo_service();
+	assert(service.get_elemente().size() == 1);
+
+	service.modifica_oferta_service("dsa", "dsa", "dsa", 2, 0);
+	assert(service.get_element_pozitie(0) == b);
+	service.undo_service();
+	assert(service.get_element_pozitie(0) == a);
+
+	service.adauga_oferta_service("dsa", "dsa", "dsa", 2);
+	service.adauga_oferta_service("dsa", "dsa", "dsa", 3);
+	service.adauga_oferta_service("dsa", "dsa", "dsa", 4);
+	service.sterge_oferta_service(2);
+	service.sterge_oferta_service(0);
+	service.modifica_oferta_service("dsa", "dsa", "dsa", 5, 0);
+	assert(service.get_elemente().size() == 2);
+	service.undo_service();
+	assert(service.get_elemente().size() == 2);
+	service.undo_service();
+	assert(service.get_elemente().size() == 3);
+	service.undo_service();
+	assert(service.get_elemente().size() == 4);
+	service.undo_service();
+	assert(service.get_elemente().size() == 3);
+	service.undo_service();
+	assert(service.get_elemente().size() == 2);
+	service.undo_service();
+	assert(service.get_elemente().size() == 1);
+	service.undo_service();
+	assert(service.get_elemente().size() == 0);
+	try {
+		service.undo_service();
+		assert(false);
+	}
+	catch (MyException&) {
+		assert(true);
+	}
+}
+
 void Tests::test_vector() {
 	test_vector_dinamic();
 	test_iterator_vector();
@@ -653,6 +723,12 @@ void Tests::test_exceptii() {
 		assert(strcmp(ex.what(), "Repository-ul nu contine elemente!") == 0);
 	}
 	try {
+		throw NuMaiSuntOperatiiUndo{};
+	}
+	catch (const MyException& ex) {
+		assert(strcmp(ex.what(), "Nu mai exista operatii pentru a face undo") == 0);
+	}
+	try {
 		throw NuExistaOptiune{};
 	}
 	catch (const MyException& ex) {
@@ -692,6 +768,7 @@ void Tests::test_service() {
 	test_sortare_service();
 	test_raport_service();
 	test_cos_service();
+	test_undo_service();
 }
 
 void Tests::run_all_tests() {

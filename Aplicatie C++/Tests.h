@@ -41,6 +41,7 @@ class Tests {
 	void test_sortare_service();
 	void test_raport_service();
 	void test_cos_service();
+	void test_undo_service();
 
 	void test_vector();
 
